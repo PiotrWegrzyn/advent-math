@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, UniqueConstraint
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -44,3 +44,29 @@ class DayProgress(Base):
     solved_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     points: Mapped[int | None] = mapped_column(Integer, nullable=True)
     student: Mapped[Student] = relationship(back_populates="progress")
+
+
+class TaskSetRecord(Base):
+    __tablename__ = "task_sets"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    key: Mapped[str] = mapped_column(String(100), unique=True)
+    name: Mapped[str] = mapped_column(String(200))
+    variants: Mapped[list["TaskVariantRecord"]] = relationship(
+        back_populates="task_set",
+        order_by="(TaskVariantRecord.day, TaskVariantRecord.position)",
+        cascade="all, delete-orphan",
+    )
+
+
+class TaskVariantRecord(Base):
+    __tablename__ = "task_variants"
+    __table_args__ = (UniqueConstraint("task_set_id", "day", "position"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    task_set_id: Mapped[int] = mapped_column(ForeignKey("task_sets.id", ondelete="CASCADE"), index=True)
+    day: Mapped[int] = mapped_column(Integer)
+    position: Mapped[int] = mapped_column(Integer)
+    text: Mapped[str] = mapped_column(Text)
+    answer: Mapped[str] = mapped_column(String(50))
+    task_set: Mapped[TaskSetRecord] = relationship(back_populates="variants")

@@ -108,11 +108,17 @@ def test_cards_contain_qr_with_code_link(client, admin, make_class):
     assert card["qr_svg"].startswith("<svg")
 
 
-def test_real_task_sets_cover_every_day():
-    from app.config import DEFAULT_TASK_SETS_DIR
-    from app.task_sets import load_task_sets
+def test_demo_task_sets_cover_every_day():
+    from app.config import DEMO_TASK_SETS_DIR
+    from app.task_sets import read_task_set_file
 
-    task_sets = load_task_sets(DEFAULT_TASK_SETS_DIR)
+    paths = sorted(DEMO_TASK_SETS_DIR.glob("*.json"))
 
-    assert task_sets
-    assert all(set(ts.days) == set(range(1, 25)) for ts in task_sets.values())
+    assert paths
+    assert all(set(read_task_set_file(path, 24).days) == set(range(1, 25)) for path in paths)
+
+
+def test_task_set_list_comes_from_database(client, admin):
+    response = client.get("/api/admin/overview", headers=admin)
+
+    assert [ts["key"] for ts in response.json()["task_sets"]] == ["simple"]

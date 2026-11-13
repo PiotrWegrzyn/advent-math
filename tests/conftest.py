@@ -39,7 +39,7 @@ def client(clock: FakeClock) -> TestClient:
         secret_key="test",
         start_date=date(2026, 12, 1),
         days=3,
-        task_sets_dir=TASK_SETS_DIR,
+        seed_task_sets_dir=TASK_SETS_DIR,
     )
     return TestClient(create_app(settings, clock=clock))
 

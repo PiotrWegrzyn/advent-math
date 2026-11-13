@@ -3,7 +3,7 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session, sessionmaker
 
 from app import admin_api, kid_api
 from app.clock import Clock, shifted_clock, system_clock
@@ -12,7 +12,7 @@ from app.context import AppContext
 from app.db import make_engine
 from app.models import Base
 from app.security import AdminTokens
-from app.task_sets import load_task_sets
+from app.task_sets import TaskSetStore, seed_task_sets
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -25,18 +25,18 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
     engine = make_engine(settings.database_url)
     Base.metadata.create_all(engine)
 
-    task_sets = load_task_sets(settings.task_sets_dir)
-    missing = [day for ts in task_sets.values() for day in range(1, settings.days + 1) if day not in ts.days]
-    if missing:
-        raise ValueError(f"W zestawach zadań brakuje dni: {sorted(set(missing))}")
+    if settings.seed_task_sets_dir is not None:
+        with Session(engine) as session, session.begin():
+            seed_task_sets(session, settings.seed_task_sets_dir, settings.days)
+    sessions = sessionmaker(engine, expire_on_commit=False)
 
     app = FastAPI(title="Kalendarz adwentowy", docs_url=None, redoc_url=None)
     app.state.ctx = AppContext(
         settings=settings,
         engine=engine,
-        sessions=sessionmaker(engine, expire_on_commit=False),
+        sessions=sessions,
         clock=clock,
-        task_sets=task_sets,
+        task_sets=TaskSetStore(sessions),
         admin_tokens=AdminTokens(settings.secret_key, settings.admin_password),
     )
     app.include_router(kid_api.router)
