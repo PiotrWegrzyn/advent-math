@@ -280,7 +280,6 @@ sup.wr-var { margin-left: .08em; }
 .eq-part.in { opacity: 1; transform: none; }
 #wr-eq-times { color: var(--gold); }
 .slot { flex-basis: 100%; font-size: 1.6em; color: #fff; text-shadow: 0 0 24px rgba(120,255,190,.9); }
-.slot.spinning { filter: blur(.6px); }
 .slot.landed { animation: land .6s; color: #ffe27a; }
 @keyframes land { 30% { transform: scale(1.35); } }
 .wr-card { width: 100%; max-width: 420px; background: rgba(255,255,255,.12); border-radius: 22px; padding: 18px; text-align: left; backdrop-filter: blur(6px); }

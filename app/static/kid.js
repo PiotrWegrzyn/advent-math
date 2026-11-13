@@ -371,15 +371,18 @@ async function animateScore(b, run) {
   eq.classList.add("in");
   result.classList.add("in", "spinning");
   const duration = Math.min(7000, 1300 + 700 * (b.multiplier - 1));
-  const start = performance.now();
-  const top = Math.max(b.points * 1.6, 99);
-  let delay = 40;
-  while (performance.now() - start < duration) {
-    result.textContent = Math.floor(Math.random() * top);
-    const progress = (performance.now() - start) / duration;
-    delay = 40 + 220 * progress * progress;
-    await wait(delay, run);
-  }
+  await new Promise((resolve) => {
+    const start = performance.now();
+    function frame(now) {
+      if (run !== animRun) return resolve();
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      result.textContent = Math.floor(b.points * eased);
+      if (t < 1) requestAnimationFrame(frame); else resolve();
+    }
+    requestAnimationFrame(frame);
+  });
+  if (run !== animRun) return;
   result.classList.remove("spinning");
   result.textContent = b.points;
   result.classList.add("landed");
