@@ -69,4 +69,5 @@ class TaskVariantRecord(Base):
     position: Mapped[int] = mapped_column(Integer)
     text: Mapped[str] = mapped_column(Text)
     answer: Mapped[str] = mapped_column(String(50))
+    image: Mapped[str | None] = mapped_column(Text, nullable=True)
     task_set: Mapped[TaskSetRecord] = relationship(back_populates="variants")

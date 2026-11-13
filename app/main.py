@@ -9,7 +9,7 @@ from app import admin_api, kid_api
 from app.clock import Clock, shifted_clock, system_clock
 from app.config import Settings, load_settings
 from app.context import AppContext
-from app.db import make_engine
+from app.db import add_missing_columns, make_engine
 from app.models import Base
 from app.security import AdminTokens
 from app.task_sets import TaskSetStore, seed_task_sets
@@ -24,6 +24,7 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
 
     engine = make_engine(settings.database_url)
     Base.metadata.create_all(engine)
+    add_missing_columns(engine)
 
     if settings.seed_task_sets_dir is not None:
         with Session(engine) as session, session.begin():

@@ -251,7 +251,7 @@ def task_set_preview(key: str, ctx: AppContext = Depends(get_ctx)):
         "key": key,
         "name": task_set.name,
         "days": [
-            {"day": day, "variants": [{"text": v.text, "answer": v.answer} for v in variants]}
+            {"day": day, "variants": [{"text": v.text, "answer": v.answer, "image": v.image} for v in variants]}
             for day, variants in sorted(task_set.days.items())
         ],
     }

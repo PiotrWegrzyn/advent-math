@@ -1,4 +1,5 @@
 import json
+import re
 import time
 from collections.abc import Callable, Iterator, Mapping
 from dataclasses import dataclass
@@ -15,6 +16,7 @@ from app.models import TaskSetRecord, TaskVariantRecord
 class Variant:
     text: str
     answer: str
+    image: str | None = None
 
 
 @dataclass(frozen=True)
@@ -35,6 +37,23 @@ class TaskSetError(ValueError):
     pass
 
 
+MAX_IMAGE_LENGTH = 100_000
+UNSAFE_SVG = re.compile(r"<script|<foreignObject|\bon[a-z]+\s*=|javascript:|<image|href\s*=\s*[\"'](?!#)", re.IGNORECASE)
+
+
+def parse_image(raw: object, where: str) -> str | None:
+    if raw is None or raw == "":
+        return None
+    image = str(raw).strip()
+    if not image.startswith("<svg") or not image.endswith("</svg>"):
+        raise TaskSetError(f"{where}: rysunek musi być kodem SVG (<svg>…</svg>)")
+    if len(image) > MAX_IMAGE_LENGTH:
+        raise TaskSetError(f"{where}: rysunek jest za duży")
+    if UNSAFE_SVG.search(image):
+        raise TaskSetError(f"{where}: rysunek zawiera niedozwolone elementy (skrypty, linki, obrazy zewnętrzne)")
+    return image
+
+
 def parse_task_set(key: str, data: dict, days: int) -> TaskSet:
     name = str(data.get("name", "")).strip()
     if not name:
@@ -53,7 +72,8 @@ def parse_task_set(key: str, data: dict, days: int) -> TaskSet:
                 raise TaskSetError(f"{key}: dzień {day}: puste zadanie")
             if parse_answer(answer) is None:
                 raise TaskSetError(f"{key}: dzień {day}: niepoprawna odpowiedź {answer!r}")
-            parsed[day].append(Variant(text=text, answer=answer))
+            image = parse_image(v.get("image"), f"{key}: dzień {day}")
+            parsed[day].append(Variant(text=text, answer=answer, image=image))
     missing = [day for day in range(1, days + 1) if day not in parsed]
     if missing:
         raise TaskSetError(f"{key}: brakuje dni {missing}")
@@ -74,7 +94,7 @@ def save_task_set(session: Session, task_set: TaskSet) -> None:
         record.variants.clear()
         session.flush()
     record.variants.extend(
-        TaskVariantRecord(day=day, position=position, text=v.text, answer=v.answer)
+        TaskVariantRecord(day=day, position=position, text=v.text, answer=v.answer, image=v.image)
         for day, variants in task_set.days.items()
         for position, v in enumerate(variants)
     )
@@ -95,7 +115,7 @@ def load_task_sets(session: Session) -> dict[str, TaskSet]:
     for record in records:
         days: dict[int, list[Variant]] = {}
         for v in record.variants:
-            days.setdefault(v.day, []).append(Variant(text=v.text, answer=v.answer))
+            days.setdefault(v.day, []).append(Variant(text=v.text, answer=v.answer, image=v.image))
         task_sets[record.key] = TaskSet(key=record.key, name=record.name, days=days)
     return task_sets
 

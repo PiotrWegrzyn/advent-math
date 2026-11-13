@@ -72,6 +72,7 @@ def task_payload(ctx: AppContext, student: Student, progress: DayProgress) -> di
     return {
         "day": progress.day,
         "text": variant.text,
+        "image": variant.image,
         "opened_at": iso(from_db(progress.opened_at)),
         "server_now": iso(ctx.clock()),
         "wrong_attempts": progress.wrong_attempts,

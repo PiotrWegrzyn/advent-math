@@ -111,7 +111,7 @@ function windowFor(d) {
     scene.textContent = SCENES[(d.day - 1) % SCENES.length];
     win.appendChild(scene);
     label.textContent = `⭐ ${d.points}`;
-  } else if (d.status === "available") label.textContent = "dziś!";
+  } else if (d.status === "available") label.textContent = me.unlocked ? "otwórz" : "dziś!";
   else if (d.status === "opened") label.textContent = "dokończ";
   if (label.textContent) win.appendChild(label);
   win.disabled = !["available", "opened", "solved"].includes(d.status);
@@ -146,6 +146,7 @@ async function openDay(day) {
   clockOffset = new Date(task.server_now).getTime() - Date.now();
   $("task-day").textContent = task.day;
   $("task-text").textContent = task.text;
+  setImage($("task-image"), task.image);
   $("answer").value = "";
   $("feedback").textContent = "";
   $("feedback").className = "feedback";
@@ -154,6 +155,11 @@ async function openDay(day) {
   timerHandle = setInterval(tick, 1000);
   show("task-modal", true);
   $("answer").focus();
+}
+
+function setImage(img, svg) {
+  img.classList.toggle("hidden", !svg);
+  img.src = svg ? "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg) : "";
 }
 
 function elapsedSeconds() {
@@ -203,6 +209,7 @@ function openWrapped(startAt = 0) {
   if (!b) return;
   document.querySelectorAll(".wr-day").forEach((n) => (n.textContent = task.day));
   $("wr-task").textContent = task.text;
+  setImage($("wr-image"), task.image);
   $("wr-sum-time").textContent = fmtTime(b.elapsed_seconds);
   $("wr-sum-wrong").textContent = b.wrong_attempts;
   $("wr-sum-base").textContent = b.base;

@@ -206,7 +206,11 @@ async function loadTasks() {
   const data = await api(`/api/admin/task-sets/${encodeURIComponent(key)}`);
   $("tasks-body").replaceChildren(...data.days.map((d) => el("div", { className: "tasks-day" }, [
     el("h3", { textContent: `Dzień ${d.day}` }),
-    ...d.variants.map((v, i) => el("p", {}, [el("b", { textContent: `Wersja ${i + 1}: ` }), v.text, el("br"), el("span", { className: "muted", textContent: `Odpowiedź: ${v.answer}` })])),
+    ...d.variants.map((v, i) => el("p", {}, [
+      el("b", { textContent: `Wersja ${i + 1}: ` }), v.text,
+      ...(v.image ? [el("img", { className: "task-image", alt: "Rysunek", src: "data:image/svg+xml;charset=utf-8," + encodeURIComponent(v.image) })] : []),
+      el("br"), el("span", { className: "muted", textContent: `Odpowiedź: ${v.answer}` }),
+    ])),
   ])));
 }
 

@@ -5,7 +5,7 @@ from pathlib import Path
 from sqlalchemy.orm import Session
 
 from app.config import load_settings
-from app.db import make_engine
+from app.db import add_missing_columns, make_engine
 from app.models import Base
 from app.task_sets import TaskSetError, read_task_set_file, save_task_set
 
@@ -27,6 +27,7 @@ def main(argv: list[str] | None = None) -> int:
 
     engine = make_engine(settings.database_url)
     Base.metadata.create_all(engine)
+    add_missing_columns(engine)
     with Session(engine) as session, session.begin():
         for task_set in task_sets:
             save_task_set(session, task_set)
