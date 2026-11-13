@@ -147,6 +147,8 @@ async function openDay(day) {
   $("task-day").textContent = task.day;
   $("task-text").textContent = task.text;
   setImage($("task-image"), task.image);
+  show("reveal-box", Boolean(me && me.unlocked));
+  $("revealed").textContent = "";
   $("answer").value = "";
   $("feedback").textContent = "";
   $("feedback").className = "feedback";
@@ -446,6 +448,15 @@ $("answer").addEventListener("input", (e) => {
   const parts = v.split(",");
   v = parts.length > 1 ? parts[0] + "," + parts.slice(1).join("") : parts[0];
   e.target.value = (negative ? "-" : "") + v;
+});
+
+$("reveal-answer").addEventListener("click", async () => {
+  try {
+    const { answer } = await api(`/api/days/${task.day}/reveal`);
+    $("revealed").textContent = `Odpowiedź: ${answer}`;
+  } catch (err) {
+    $("revealed").textContent = err.message;
+  }
 });
 
 $("sign-toggle").addEventListener("click", () => {

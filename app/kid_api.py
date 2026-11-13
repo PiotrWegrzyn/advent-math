@@ -227,6 +227,21 @@ def answer_day(
     }
 
 
+@router.get("/days/{day}/reveal")
+def reveal_answer(
+    day: int,
+    student: Student = Depends(current_student),
+    ctx: AppContext = Depends(get_ctx),
+):
+    if not ctx.settings.unlock_all_days:
+        raise HTTPException(404, "Not Found")
+    progress = progress_for(student, day)
+    if progress is None:
+        raise HTTPException(409, "Najpierw otwórz okienko.")
+    task_set = ctx.task_sets[student.school_class.task_set]
+    return {"answer": task_set.variant(day, progress.variant).answer}
+
+
 @router.get("/rankings")
 def rankings(
     student: Student = Depends(current_student),

@@ -78,3 +78,13 @@ def test_header_streak_counts_run_ending_at_last_solved_day(client, make_class):
 
     assert response.json()["streak"] == 2
     assert response.json()["today_multiplier"] == 1.21
+
+
+def test_answer_can_be_revealed_in_test_mode(client, make_class):
+    student = make_class(size=1)["students"][0]
+    headers = kid(student["code"])
+    client.post("/api/days/3/open", headers=headers)
+
+    response = client.get("/api/days/3/reveal", headers=headers)
+
+    assert response.json() == {"answer": "-3"}

@@ -200,3 +200,14 @@ def test_html_pages_are_revalidated(client):
     response = client.get("/")
 
     assert response.headers["cache-control"] == "no-cache"
+
+
+def test_answer_cannot_be_revealed_outside_test_mode(client, make_class):
+    student = make_class(size=1)["students"][0]
+    headers = kid(student["code"])
+    client.post("/api/days/1/open", headers=headers)
+
+    response = client.get("/api/days/1/reveal", headers=headers)
+
+    assert response.status_code == 404
+    assert "answer" not in response.json()

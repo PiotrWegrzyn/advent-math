@@ -11,7 +11,7 @@
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icon.svg">
-  <link rel="stylesheet" href="/style.css?v=202611140005">
+  <link rel="stylesheet" href="/style.css?v=202611140010">
 </head>
 <body class="kid">
 <div class="snow"></div>
@@ -153,6 +153,10 @@
     <div class="sheet-body">
       <div class="task-text" id="task-text"></div>
       <img class="task-image hidden" id="task-image" alt="Rysunek do zadania">
+      <div class="reveal hidden" id="reveal-box">
+        <button type="button" class="btn secondary small" id="reveal-answer">🧪 Pokaż odpowiedź</button>
+        <span id="revealed"></span>
+      </div>
     </div>
     <form id="answer-form" class="answer-bar">
       <p class="feedback" id="feedback"></p>
@@ -223,6 +227,6 @@
   <p class="wr-hint" id="wr-hint">Dotknij albo przesuń →</p>
 </div>
 
-<script src="/kid.js?v=202611140005"></script>
+<script src="/kid.js?v=202611140010"></script>
 </body>
 </html>
