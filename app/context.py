@@ -1,3 +1,4 @@
+import time
 from collections.abc import Iterator, Mapping
 from dataclasses import dataclass, field
 
@@ -5,6 +6,7 @@ from fastapi import Request
 from sqlalchemy import Engine
 from sqlalchemy.orm import Session, sessionmaker
 
+from app.app_settings import TEST_MODE, read_flag, write_flag
 from app.clock import Clock, day_index
 from app.config import Settings
 from app.security import AdminTokens, FailureLimiter
@@ -20,12 +22,25 @@ class AppContext:
     task_sets: Mapping[str, TaskSet]
     admin_tokens: AdminTokens
     login_limiter: FailureLimiter = field(default_factory=FailureLimiter)
+    _test_mode: tuple[float, bool] | None = None
+
+    def test_mode(self) -> bool:
+        now = time.monotonic()
+        if self._test_mode is None or now - self._test_mode[0] >= 5:
+            with self.sessions() as session:
+                self._test_mode = (now, bool(read_flag(session, TEST_MODE)))
+        return self._test_mode[1]
+
+    def set_test_mode(self, enabled: bool) -> None:
+        with self.sessions() as session, session.begin():
+            write_flag(session, TEST_MODE, enabled)
+        self._test_mode = (time.monotonic(), enabled)
 
     def today(self) -> int:
         return day_index(self.clock(), self.settings.start_date)
 
     def phase(self) -> str:
-        if self.settings.unlock_all_days:
+        if self.test_mode():
             return "running"
         today = self.today()
         if today < 1:

@@ -50,7 +50,8 @@ const PHASES = { before: "Kalendarz jeszcze nie wystartował", running: "Trwa", 
 
 async function loadOverview() {
   overview = await api("/api/admin/overview");
-  $("phase").textContent = overview.phase === "running" ? `Dziś okienko ${overview.today}` : PHASES[overview.phase];
+  $("phase").textContent = overview.test_mode ? "Tryb testowy" : overview.phase === "running" ? `Dziś okienko ${overview.today}` : PHASES[overview.phase];
+  renderTestMode();
   const setOptions = () => overview.task_sets.map((s) => el("option", { value: s.key, textContent: `${s.name} (${s.key})` }));
   $("new-set").replaceChildren(...setOptions());
   $("class-set").replaceChildren(...setOptions());
@@ -199,10 +200,37 @@ function renderRankings() {
   $("ranking-body").replaceChildren(list.length ? t : el("p", { className: "muted", textContent: "Brak danych." }));
 }
 
+function renderTestMode() {
+  const on = overview.test_mode;
+  $("test-mode-box").classList.toggle("on", on);
+  $("test-mode-text").textContent = on
+    ? "Włączony: uczniowie mogą otwierać wszystkie okienka i podglądać odpowiedzi. Wyłącz przed startem kalendarza!"
+    : "Wyłączony: okienka otwierają się dzień po dniu, odpowiedzi są ukryte.";
+  $("test-mode-toggle").textContent = on ? "Wyłącz" : "Włącz";
+  $("test-mode-toggle").className = on ? "btn small" : "btn secondary small";
+}
+
+$("test-mode-toggle").addEventListener("click", async () => {
+  const enable = !overview.test_mode;
+  const msg = enable
+    ? "Włączyć tryb testowy? Wszystkie okienka będą otwarte i będzie można podejrzeć odpowiedzi."
+    : "Wyłączyć tryb testowy? Okienka wrócą do otwierania dzień po dniu.";
+  if (!confirm(msg)) return;
+  try { await api("/api/admin/test-mode", { method: "POST", body: JSON.stringify({ enabled: enable }) }); await loadOverview(); }
+  catch (e) { alert(e.message); }
+});
+
+$("delete-set").addEventListener("click", async () => {
+  const key = $("preview-set").value;
+  if (!key || !confirm(`Usunąć zestaw „${key}” z bazy? Tego nie da się cofnąć.`)) return;
+  try { await api(`/api/admin/task-sets/${encodeURIComponent(key)}`, { method: "DELETE" }); await loadOverview(); await loadTasks(); }
+  catch (e) { alert(e.message); }
+});
+
 $("preview-set").addEventListener("change", loadTasks);
 async function loadTasks() {
   const key = $("preview-set").value;
-  if (!key) return;
+  if (!key) { $("tasks-body").replaceChildren(); return; }
   const data = await api(`/api/admin/task-sets/${encodeURIComponent(key)}`);
   $("tasks-body").replaceChildren(...data.days.map((d) => el("div", { className: "tasks-day" }, [
     el("h3", { textContent: `Dzień ${d.day}` }),

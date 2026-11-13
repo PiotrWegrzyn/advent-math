@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Panel nauczyciela</title>
-  <link rel="stylesheet" href="/style.css?v=202611140010">
+  <link rel="stylesheet" href="/style.css?v=202611140022">
   <style>
     .wrap { max-width: 1200px; }
     .dash { overflow-x: auto; }
@@ -17,6 +17,8 @@
     .classes { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
     code { font-size: 1rem; letter-spacing: .1em; }
     .tasks-day { border-top: 1px solid var(--line); padding: 8px 0; }
+    .test-mode { display: flex; align-items: center; gap: 12px; margin: 8px 0 12px; padding: 10px 12px; border-radius: 12px; background: #f3ecdf; }
+    .test-mode.on { background: #fff1c2; box-shadow: 0 0 0 2px var(--gold); }
   </style>
 </head>
 <body>
@@ -42,6 +44,10 @@
     <div id="tab-dashboard">
       <div class="panel">
         <div class="row"><h2 class="grow">Klasy</h2><span class="muted" id="phase"></span><button class="btn secondary small" id="logout">Wyloguj</button></div>
+        <div class="test-mode" id="test-mode-box">
+          <div class="grow"><b>🧪 Tryb testowy</b><br><span class="muted" id="test-mode-text"></span></div>
+          <button class="btn small" id="test-mode-toggle"></button>
+        </div>
         <div class="classes" id="class-list"></div>
         <details>
           <summary><b>Dodaj klasę</b></summary>
@@ -78,11 +84,11 @@
     </div>
 
     <div id="tab-tasks" class="panel hidden">
-      <div class="row"><h2 class="grow">Zestawy zadań</h2><select id="preview-set" style="width:auto"></select></div>
+      <div class="row"><h2 class="grow">Zestawy zadań</h2><select id="preview-set" style="width:auto"></select><button class="btn secondary small" id="delete-set">Usuń zestaw</button></div>
       <div id="tasks-body"></div>
     </div>
   </section>
 </div>
-<script src="/admin.js?v=202611140010"></script>
+<script src="/admin.js?v=202611140022"></script>
 </body>
 </html>

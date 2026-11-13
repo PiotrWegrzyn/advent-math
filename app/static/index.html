@@ -11,7 +11,7 @@
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icon.svg">
-  <link rel="stylesheet" href="/style.css?v=202611140010">
+  <link rel="stylesheet" href="/style.css?v=202611140022">
 </head>
 <body class="kid">
 <div class="snow"></div>
@@ -100,12 +100,12 @@
       </svg>
       <details class="panel rules">
         <summary>Jak liczymy punkty?</summary>
-        <p class="rules-formula">P = (100 − 10·<i>m</i> − 1·<i>b</i>) × 1,1<sup class="gold">N</sup></p>
+        <p class="rules-formula">Wynik = Punkty × (1 + <span class="rv">P</span>)<sup class="gold">N</sup></p>
         <ul>
-          <li><b>m</b> – zaczęte minuty ponad 5:00 (pierwsze 5 minut bez kary)</li>
-          <li><b>b</b> – błędne odpowiedzi</li>
-          <li><b class="gold">N</b> – ile dni z rzędu masz rozwiązane przed dzisiaj</li>
-          <li>Za dobrą odpowiedź zawsze co najmniej 10 pkt.</li>
+          <li><b>Punkty</b> = 100 za poprawną odpowiedź w 5 minut, potem −10 za każdą zaczętą minutę i −1 za każdą błędną odpowiedź. Zawsze co najmniej 10.</li>
+          <li><b class="rv-text">P</b> = 10% = 0,1, czyli bonus za każdy dzień serii.</li>
+          <li><b class="gold">N</b> = ile dni z rzędu masz rozwiązane przed dzisiaj.</li>
+          <li>📈 To wzór na <b>procent składany</b>, tak samo rosną pieniądze na lokacie w banku.</li>
           <li>Opuszczony dzień zeruje serię!</li>
         </ul>
       </details>
@@ -227,6 +227,6 @@
   <p class="wr-hint" id="wr-hint">Dotknij albo przesuń →</p>
 </div>
 
-<script src="/kid.js?v=202611140010"></script>
+<script src="/kid.js?v=202611140022"></script>
 </body>
 </html>

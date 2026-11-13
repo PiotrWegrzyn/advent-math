@@ -84,6 +84,9 @@ body.kid .stat.streak b { color: #b07d00; }
 .rules-formula { font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif; font-size: 1.2rem; text-align: center; background: var(--bg); color: #fff; border-radius: 12px; padding: 10px; margin: 10px 0 0; }
 .rules-formula i { color: #9fd3ff; }
 .rules-formula sup.gold { font-size: .7em; }
+.rules-formula .rv { color: #ffe27a; font-weight: 700; }
+.rv-text { color: #b07d00; }
+.rules li { margin-bottom: 4px; }
 .ranking { padding: 6px 10px; }
 .ranking td, .ranking th { padding: 10px 4px; }
 .ranking .nick { max-width: 9.5em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -237,10 +240,10 @@ body.kid .stat.streak b { color: #b07d00; }
   transition: opacity .35s, transform .35s; }
 .wr-slide.active { opacity: 1; pointer-events: auto; transform: none; }
 .wr-slide.before { transform: translateX(-40px); }
-.s-points { background: radial-gradient(circle at 20% 15%, #ff5e7e, transparent 55%), linear-gradient(160deg, #c8102e, #5b0b3d); }
+.s-points { background: radial-gradient(circle at 20% 15%, #5be38f, transparent 55%), linear-gradient(160deg, #1f9a52, #0b4a2e); }
 .s-mult { background: radial-gradient(circle at 80% 20%, #ffcf3f, transparent 50%), linear-gradient(160deg, #f08a24, #8c2b0b); }
-.s-score { background: radial-gradient(circle at 50% 30%, #3fe0a0, transparent 55%), linear-gradient(160deg, #0f7a4a, #0c2f3f); }
-.s-summary { background: radial-gradient(circle at 30% 10%, #6fa8ff, transparent 55%), linear-gradient(160deg, #1d3d8f, #120d2b); }
+.s-score { background: radial-gradient(circle at 50% 30%, #5fb4ff, transparent 55%), linear-gradient(160deg, #1f5fbf, #0c2350); }
+.s-summary { background: radial-gradient(circle at 30% 10%, #b48cff, transparent 55%), linear-gradient(160deg, #5a2ca0, #1a0d3a); }
 .wr-kicker { font-weight: 800; font-size: 1rem; opacity: .9; margin: 0 0 18px; letter-spacing: .02em; }
 .wr-label { font-size: 1.1rem; margin: 0; opacity: .85; }
 .wr-big { font-size: clamp(5rem, 30vw, 9rem); font-weight: 900; line-height: 1; margin: 6px 0 22px; font-variant-numeric: tabular-nums;
@@ -283,7 +286,7 @@ sup.wr-var { margin-left: .08em; }
 .eq-part { opacity: 0; transform: translateX(-60px); transition: opacity .45s, transform .45s cubic-bezier(.2,1.4,.4,1); }
 .eq-part.in { opacity: 1; transform: none; }
 #wr-eq-times { color: var(--gold); }
-.slot { flex-basis: 100%; font-size: 1.6em; color: #fff; text-shadow: 0 0 24px rgba(120,255,190,.9); }
+.slot { flex-basis: 100%; font-size: 1.6em; color: #fff; text-shadow: 0 0 24px rgba(140,200,255,.9); }
 .slot.landed { animation: land .6s; color: #ffe27a; }
 @keyframes land { 30% { transform: scale(1.35); } }
 .wr-card { width: 100%; max-width: 420px; background: rgba(255,255,255,.12); border-radius: 22px; padding: 18px; text-align: left; backdrop-filter: blur(6px); }

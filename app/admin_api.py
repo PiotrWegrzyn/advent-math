@@ -12,6 +12,7 @@ from app.identities import new_code, new_nick
 from app.models import SchoolClass, Student
 from app.security import client_ip
 from app.standings import build_rankings, solve_seconds, totals
+from app.task_sets import delete_task_set
 
 router = APIRouter(prefix="/api/admin")
 
@@ -31,6 +32,10 @@ class ClassCreate(BaseModel):
 class ClassUpdate(BaseModel):
     task_set: str | None = None
     size: int | None = Field(default=None, ge=1, le=MAX_CLASS_SIZE)
+
+
+class TestModeUpdate(BaseModel):
+    enabled: bool
 
 
 class StudentUpdate(BaseModel):
@@ -100,6 +105,7 @@ def overview(ctx: AppContext = Depends(get_ctx), session: Session = Depends(get_
     ).all()
     return {
         "phase": ctx.phase(),
+        "test_mode": ctx.test_mode(),
         "today": ctx.today(),
         "days": ctx.settings.days,
         "start_date": ctx.settings.start_date.isoformat(),
@@ -255,3 +261,23 @@ def task_set_preview(key: str, ctx: AppContext = Depends(get_ctx)):
             for day, variants in sorted(task_set.days.items())
         ],
     }
+
+
+@router.post("/test-mode", dependencies=[Depends(require_admin)])
+def set_test_mode(body: TestModeUpdate, ctx: AppContext = Depends(get_ctx)):
+    ctx.set_test_mode(body.enabled)
+    return {"test_mode": ctx.test_mode(), "phase": ctx.phase()}
+
+
+@router.delete("/task-sets/{key}", dependencies=[Depends(require_admin)])
+def remove_task_set(key: str, ctx: AppContext = Depends(get_ctx), session: Session = Depends(get_session)):
+    users = session.scalars(select(SchoolClass.name).where(SchoolClass.task_set == key)).all()
+    if users:
+        raise HTTPException(409, f"Zestawu używają klasy: {', '.join(sorted(users))}. Najpierw zmień im zestaw.")
+    if not delete_task_set(session, key):
+        raise HTTPException(404, "Nie ma takiego zestawu.")
+    session.commit()
+    invalidate = getattr(ctx.task_sets, "invalidate", None)
+    if invalidate:
+        invalidate()
+    return {"deleted": key}

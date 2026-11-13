@@ -59,7 +59,7 @@ def progress_for(student: Student, day: int) -> DayProgress | None:
 
 
 def require_today(ctx: AppContext, day: int) -> None:
-    if ctx.settings.unlock_all_days and 1 <= day <= ctx.settings.days:
+    if ctx.test_mode() and 1 <= day <= ctx.settings.days:
         return
     if ctx.phase() != "running" or day != ctx.today():
         raise HTTPException(403, "To okienko jest teraz zamknięte.")
@@ -102,7 +102,7 @@ def me(student: Student = Depends(current_student), ctx: AppContext = Depends(ge
     today = ctx.today()
     solved = solved_days(student)
     days = []
-    unlocked = ctx.settings.unlock_all_days
+    unlocked = ctx.test_mode()
     for day in range(1, ctx.settings.days + 1):
         progress = progress_for(student, day)
         if progress is not None and progress.solved_at is not None:
@@ -233,7 +233,7 @@ def reveal_answer(
     student: Student = Depends(current_student),
     ctx: AppContext = Depends(get_ctx),
 ):
-    if not ctx.settings.unlock_all_days:
+    if not ctx.test_mode():
         raise HTTPException(404, "Not Found")
     progress = progress_for(student, day)
     if progress is None:

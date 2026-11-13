@@ -5,7 +5,7 @@ PROJECT="${PROJECT:-law-hub-512902}"
 REGION="${REGION:-europe-west1}"
 PUBLIC_URL="${PUBLIC_URL:-}"
 
-env_vars="START_DATE=2026-12-01"
+env_vars="START_DATE=2026-12-01,SEED_TASK_SETS_DIR="
 if [ -n "${UNLOCK_ALL_DAYS:-}" ]; then
   env_vars="$env_vars,UNLOCK_ALL_DAYS=$UNLOCK_ALL_DAYS"
 fi

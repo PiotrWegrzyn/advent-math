@@ -9,6 +9,7 @@ from app import admin_api, kid_api
 from app.clock import Clock, shifted_clock, system_clock
 from app.config import Settings, load_settings
 from app.context import AppContext
+from app.app_settings import TEST_MODE, read_flag, write_flag
 from app.db import add_missing_columns, make_engine
 from app.models import Base
 from app.security import AdminTokens
@@ -26,6 +27,9 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
     Base.metadata.create_all(engine)
     add_missing_columns(engine)
 
+    with Session(engine) as session, session.begin():
+        if read_flag(session, TEST_MODE) is None:
+            write_flag(session, TEST_MODE, settings.unlock_all_days)
     if settings.seed_task_sets_dir is not None:
         with Session(engine) as session, session.begin():
             seed_task_sets(session, settings.seed_task_sets_dir, settings.days)

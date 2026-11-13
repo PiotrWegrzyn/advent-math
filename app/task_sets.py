@@ -107,6 +107,14 @@ def seed_task_sets(session: Session, directory: Path, days: int) -> None:
             save_task_set(session, read_task_set_file(path, days))
 
 
+def delete_task_set(session: Session, key: str) -> bool:
+    record = session.scalar(select(TaskSetRecord).where(TaskSetRecord.key == key))
+    if record is None:
+        return False
+    session.delete(record)
+    return True
+
+
 def load_task_sets(session: Session) -> dict[str, TaskSet]:
     records = session.scalars(
         select(TaskSetRecord).options(selectinload(TaskSetRecord.variants)).order_by(TaskSetRecord.key)
@@ -134,6 +142,9 @@ class TaskSetStore(Mapping[str, TaskSet]):
                 self._cache = load_task_sets(session)
             self._loaded_at = self._now()
         return self._cache
+
+    def invalidate(self) -> None:
+        self._cache = None
 
     def __getitem__(self, key: str) -> TaskSet:
         return self._sets()[key]

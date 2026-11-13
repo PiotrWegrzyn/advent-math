@@ -71,3 +71,10 @@ class TaskVariantRecord(Base):
     answer: Mapped[str] = mapped_column(String(50))
     image: Mapped[str | None] = mapped_column(Text, nullable=True)
     task_set: Mapped[TaskSetRecord] = relationship(back_populates="variants")
+
+
+class AppSetting(Base):
+    __tablename__ = "app_settings"
+
+    key: Mapped[str] = mapped_column(String(50), primary_key=True)
+    value: Mapped[str] = mapped_column(String(200))
