@@ -80,24 +80,45 @@ function renderGrid() {
   } else {
     show("phase-note", false);
   }
-  const grid = $("grid");
-  grid.innerHTML = "";
-  for (const d of me.days) {
-    const door = document.createElement("button");
-    door.className = `door ${d.status}`;
-    door.textContent = d.day;
-    const label = document.createElement("small");
-    if (d.status === "solved") label.textContent = `⭐ ${d.points}`;
-    else if (d.status === "missed") label.textContent = "✗";
-    else if (d.status === "available") label.textContent = "dziś!";
-    else if (d.status === "opened") label.textContent = "dokończ";
-    else label.textContent = "🔒";
-    door.appendChild(label);
-    door.disabled = !["available", "opened", "solved"].includes(d.status);
-    door.onclick = () => clickDoor(d);
-    grid.appendChild(door);
+  const columns = wideScreen.matches ? 6 : 4;
+  const floors = [];
+  for (let i = 0; i < me.days.length; i += columns) {
+    const floor = document.createElement("div");
+    floor.className = "floor";
+    me.days.slice(i, i + columns).forEach((d) => floor.appendChild(windowFor(d)));
+    floors.push(floor);
   }
+  $("grid").replaceChildren(...floors);
 }
+
+const SCENES = ["📚", "✏️", "🧮", "📐", "🎄", "⛄", "🎁", "🍪", "🦌", "🔔", "⭐", "🕯️",
+  "🧣", "🎅", "📏", "🌟", "🎨", "🧸", "🛷", "🍊", "🎶", "🔭", "🧁", "🏆"];
+
+function windowFor(d) {
+  const win = document.createElement("button");
+  win.className = `window ${d.status}`;
+  const num = document.createElement("span");
+  num.className = "num";
+  num.textContent = d.day;
+  win.appendChild(num);
+  const label = document.createElement("small");
+  if (d.status === "solved") {
+    const scene = document.createElement("span");
+    scene.className = "scene";
+    scene.textContent = SCENES[(d.day - 1) % SCENES.length];
+    win.appendChild(scene);
+    label.textContent = `⭐ ${d.points}`;
+  } else if (d.status === "available") label.textContent = "dziś!";
+  else if (d.status === "opened") label.textContent = "dokończ";
+  if (label.textContent) win.appendChild(label);
+  win.disabled = !["available", "opened", "solved"].includes(d.status);
+  win.setAttribute("aria-label", `Okienko ${d.day}`);
+  win.onclick = () => clickDoor(d);
+  return win;
+}
+
+const wideScreen = window.matchMedia("(min-width: 640px)");
+wideScreen.addEventListener("change", () => { if (me) renderGrid(); });
 
 function clickDoor(d) {
   if (d.status === "available") {
@@ -220,6 +241,12 @@ $("answer").addEventListener("input", (e) => {
   e.target.value = (negative ? "-" : "") + v;
 });
 
+$("sign-toggle").addEventListener("click", () => {
+  const input = $("answer");
+  input.value = input.value.startsWith("-") ? input.value.slice(1) : "-" + input.value;
+  input.focus();
+});
+
 $("answer-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const answer = $("answer").value.trim();
@@ -297,11 +324,11 @@ function renderRankings() {
       list.map((r) => ({ me: r.mine, cells: [[r.rank], [r.class_name], [fmtNumber(r.average_points), "num"]] }))));
   } else if (rankingTab === "today") {
     body.appendChild(table([["#"], ["Nick"], ["Klasa"], ["Czas", "num"]],
-      list.map((r) => ({ me: r.me, cells: [[r.rank], [r.nick], [r.class_name], [fmtTime(r.seconds), "num"]] }))));
+      list.map((r) => ({ me: r.me, cells: [[r.rank], [r.nick, "nick"], [r.class_name], [fmtTime(r.seconds), "num"]] }))));
   } else {
     const withClass = rankingTab === "school";
     body.appendChild(table([["#"], ["Nick"], ...(withClass ? [["Klasa"]] : []), ["Zadania", "num"], ["Punkty", "num"]],
-      list.map((r) => ({ me: r.me, cells: [[r.rank], [r.nick], ...(withClass ? [[r.class_name]] : []), [r.solved, "num"], [fmtNumber(r.points), "num"]] }))));
+      list.map((r) => ({ me: r.me, cells: [[r.rank], [r.nick, "nick"], ...(withClass ? [[r.class_name]] : []), [r.solved, "num"], [fmtNumber(r.points), "num"]] }))));
   }
 }
 
