@@ -51,3 +51,30 @@ def test_days_outside_calendar_stay_closed(client, make_class):
     response = client.post("/api/days/4/open", headers=kid(student["code"]))
 
     assert response.status_code == 403
+
+
+def solve(client, headers, day, answer):
+    client.post(f"/api/days/{day}/open", headers=headers)
+    client.post(f"/api/days/{day}/answer", json={"answer": answer}, headers=headers)
+
+
+def test_solved_windows_show_as_solved(client, make_class):
+    student = make_class(size=1)["students"][0]
+    headers = kid(student["code"])
+    solve(client, headers, 2, "2,5")
+
+    response = client.get("/api/me", headers=headers)
+
+    assert [d["status"] for d in response.json()["days"]] == ["available", "solved", "available"]
+
+
+def test_header_streak_counts_run_ending_at_last_solved_day(client, make_class):
+    student = make_class(size=1)["students"][0]
+    headers = kid(student["code"])
+    solve(client, headers, 1, "4")
+    solve(client, headers, 2, "2,5")
+
+    response = client.get("/api/me", headers=headers)
+
+    assert response.json()["streak"] == 2
+    assert response.json()["today_multiplier"] == 1.21

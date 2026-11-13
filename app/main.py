@@ -40,6 +40,13 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
         task_sets=TaskSetStore(sessions),
         admin_tokens=AdminTokens(settings.secret_key, settings.admin_password),
     )
+    @app.middleware("http")
+    async def revalidate_html(request, call_next):
+        response = await call_next(request)
+        if response.headers.get("content-type", "").startswith("text/html"):
+            response.headers["Cache-Control"] = "no-cache"
+        return response
+
     app.include_router(kid_api.router)
     app.include_router(admin_api.router)
 

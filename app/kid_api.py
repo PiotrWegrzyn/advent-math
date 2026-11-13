@@ -105,19 +105,25 @@ def me(student: Student = Depends(current_student), ctx: AppContext = Depends(ge
     unlocked = ctx.settings.unlock_all_days
     for day in range(1, ctx.settings.days + 1):
         progress = progress_for(student, day)
-        if unlocked and (progress is None or progress.solved_at is None):
+        if progress is not None and progress.solved_at is not None:
+            status = "solved"
+        elif unlocked:
             status = "opened" if progress is not None else "available"
         elif day > today:
             status = "locked"
-        elif progress is not None and progress.solved_at is not None:
-            status = "solved"
         elif day == today:
             status = "opened" if progress is not None else "available"
         else:
             status = "missed"
         days.append({"day": day, "status": status, "points": progress.points if progress else None})
 
-    current_streak = streak_before(solved, today + 1) if today in solved else streak_before(solved, today)
+    if unlocked:
+        next_day = max(solved, default=0) + 1
+        current_streak = streak_before(solved, next_day)
+        next_multiplier = multiplier(current_streak)
+    else:
+        current_streak = streak_before(solved, today + 1) if today in solved else streak_before(solved, today)
+        next_multiplier = multiplier(streak_before(solved, today))
     return {
         "nick": student.nick,
         "class_name": student.school_class.name,
@@ -130,7 +136,7 @@ def me(student: Student = Depends(current_student), ctx: AppContext = Depends(ge
         "total_points": sum(p.points or 0 for p in student.progress),
         "solved": len(solved),
         "streak": current_streak,
-        "today_multiplier": round(multiplier(streak_before(solved, today)), 4),
+        "today_multiplier": round(next_multiplier, 4),
     }
 
 

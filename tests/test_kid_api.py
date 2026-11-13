@@ -194,3 +194,9 @@ def test_correct_answer_returns_breakdown_also_on_reopen(client, make_class, clo
     assert answered["breakdown"]["wrong_attempts"] == 1
     assert answered["breakdown"]["points"] == answered["points"] == 89
     assert reopened["breakdown"] == answered["breakdown"]
+
+
+def test_html_pages_are_revalidated(client):
+    response = client.get("/")
+
+    assert response.headers["cache-control"] == "no-cache"
