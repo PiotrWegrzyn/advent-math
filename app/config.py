@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 
-DEFAULT_TASK_SETS_DIR = Path(__file__).parent / "task_sets"
+DEMO_TASK_SETS_DIR = Path(__file__).parent / "task_sets"
 
 
 @dataclass(frozen=True)
@@ -16,7 +16,7 @@ class Settings:
     fake_now: str | None = None
     public_url: str | None = None
     unlock_all_days: bool = False
-    task_sets_dir: Path = DEFAULT_TASK_SETS_DIR
+    seed_task_sets_dir: Path | None = DEMO_TASK_SETS_DIR
 
 
 def load_settings() -> Settings:
@@ -30,5 +30,11 @@ def load_settings() -> Settings:
         fake_now=env.get("FAKE_NOW") or None,
         public_url=env.get("PUBLIC_URL") or None,
         unlock_all_days=env.get("UNLOCK_ALL_DAYS", "").lower() in {"1", "true", "yes"},
-        task_sets_dir=Path(env.get("TASK_SETS_DIR", DEFAULT_TASK_SETS_DIR)),
+        seed_task_sets_dir=seed_dir(env.get("SEED_TASK_SETS_DIR")),
     )
+
+
+def seed_dir(raw: str | None) -> Path | None:
+    if raw is None:
+        return DEMO_TASK_SETS_DIR
+    return Path(raw) if raw.strip() else None

@@ -1,4 +1,4 @@
-from collections.abc import Iterator
+from collections.abc import Iterator, Mapping
 from dataclasses import dataclass, field
 
 from fastapi import Request
@@ -17,7 +17,7 @@ class AppContext:
     engine: Engine
     sessions: sessionmaker[Session]
     clock: Clock
-    task_sets: dict[str, TaskSet]
+    task_sets: Mapping[str, TaskSet]
     admin_tokens: AdminTokens
     login_limiter: FailureLimiter = field(default_factory=FailureLimiter)
 

@@ -41,8 +41,17 @@ day points = round( max(10, 100 − 10 × started minutes over 5:00 − 1 × wro
 
 ## Task sets
 
-Task sets are JSON files in `app/task_sets/`, versioned with the code. One set can be assigned to
-many classes. Every set must define all 24 days; the app refuses to start otherwise.
+Task sets live in the database (tables `task_sets` and `task_variants`). One set can be assigned to
+many classes. Each day has a pool of variants rotated between students. Sets are written as JSON
+and loaded with the import command, which replaces the whole set with the same key (the file name
+by default) and refuses files that miss any of the `DAYS` days or have an answer a child cannot type
+(digits, decimal comma, optional leading minus):
+
+```bash
+uv run python -m app.import_tasks private_tasks/grade7.json
+DATABASE_URL="$(gcloud secrets versions access latest --secret advent-database-url --project law-hub-512902)" \
+  uv run python -m app.import_tasks private_tasks/grade7.json
+```
 
 ```json
 {
@@ -56,7 +65,11 @@ many classes. Every set must define all 24 days; the app refuses to start otherw
 }
 ```
 
-`grade4-demo.json` and `grade6-demo.json` are placeholders until the real tasks are written.
+The repository is public, so real tasks never go into git: keep their files in `private_tasks/`
+(gitignored). `app/task_sets/grade4-demo.json` and `grade6-demo.json` are demo sets; on start-up the
+app seeds every file from `SEED_TASK_SETS_DIR` (default `app/task_sets/`) whose key is not in the
+database yet, so existing sets are never overwritten. The running app re-reads sets every 30 seconds,
+so an import needs no redeploy.
 
 ## Local development
 
@@ -79,6 +92,7 @@ Locally the app uses SQLite (`adwent.db`).
 | `START_DATE` | `2026-12-01` | Day 1 of the calendar |
 | `DAYS` | `24` | Number of windows |
 | `PUBLIC_URL` | request URL | Address printed on cards and encoded in QR codes |
+| `SEED_TASK_SETS_DIR` | `app/task_sets/` | Demo sets added on start-up when missing; empty disables |
 | `FAKE_NOW` | – | Testing only: pretend the current time is e.g. `2026-12-05T08:00` |
 
 ## Deployment (Google Cloud Run + Cloud SQL)
