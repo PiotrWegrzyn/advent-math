@@ -15,6 +15,7 @@ class Settings:
     days: int = 24
     fake_now: str | None = None
     public_url: str | None = None
+    unlock_all_days: bool = False
     task_sets_dir: Path = DEFAULT_TASK_SETS_DIR
 
 
@@ -28,5 +29,6 @@ def load_settings() -> Settings:
         days=int(env.get("DAYS", Settings.days)),
         fake_now=env.get("FAKE_NOW") or None,
         public_url=env.get("PUBLIC_URL") or None,
+        unlock_all_days=env.get("UNLOCK_ALL_DAYS", "").lower() in {"1", "true", "yes"},
         task_sets_dir=Path(env.get("TASK_SETS_DIR", DEFAULT_TASK_SETS_DIR)),
     )

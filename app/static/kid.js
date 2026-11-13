@@ -77,6 +77,9 @@ function renderGrid() {
   } else if (me.phase === "after") {
     note.textContent = "Kalendarz się skończył. Wesołych Świąt! 🎁";
     show("phase-note", true);
+  } else if (me.unlocked) {
+    note.textContent = "🧪 Tryb testowy: wszystkie okienka są otwarte.";
+    show("phase-note", true);
   } else {
     show("phase-note", false);
   }
@@ -125,7 +128,7 @@ function clickDoor(d) {
     $("intro-day").textContent = d.day;
     $("intro-go").onclick = () => { show("intro-modal", false); openDay(d.day); };
     show("intro-modal", true);
-  } else if (d.day === me.today) {
+  } else if (d.day === me.today || me.unlocked) {
     openDay(d.day);
   } else {
     alert(`Dzień ${d.day}: +${d.points} pkt ⭐`);

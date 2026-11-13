@@ -25,6 +25,8 @@ class AppContext:
         return day_index(self.clock(), self.settings.start_date)
 
     def phase(self) -> str:
+        if self.settings.unlock_all_days:
+            return "running"
         today = self.today()
         if today < 1:
             return "before"

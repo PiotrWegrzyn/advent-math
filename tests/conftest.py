@@ -31,9 +31,8 @@ def clock() -> FakeClock:
     return FakeClock(datetime(2026, 12, 1, 12, 0, tzinfo=WARSAW))
 
 
-@pytest.fixture
-def client(clock: FakeClock) -> TestClient:
-    settings = Settings(
+def make_settings(**overrides) -> Settings:
+    defaults = dict(
         database_url="sqlite://",
         admin_password=ADMIN_PASSWORD,
         secret_key="test",
@@ -41,7 +40,17 @@ def client(clock: FakeClock) -> TestClient:
         days=3,
         task_sets_dir=TASK_SETS_DIR,
     )
-    return TestClient(create_app(settings, clock=clock))
+    return Settings(**{**defaults, **overrides})
+
+
+@pytest.fixture
+def unlock_all_days() -> bool:
+    return False
+
+
+@pytest.fixture
+def client(clock: FakeClock, unlock_all_days: bool) -> TestClient:
+    return TestClient(create_app(make_settings(unlock_all_days=unlock_all_days), clock=clock))
 
 
 @pytest.fixture
