@@ -274,27 +274,79 @@ async function animatePoints(b, run) {
   bump(big);
 }
 
+function fly(from, to, text, run) {
+  return new Promise((resolve) => {
+    const start = from.getBoundingClientRect();
+    const end = to.getBoundingClientRect();
+    const flyer = document.createElement("p");
+    flyer.className = "flyer";
+    flyer.textContent = text;
+    flyer.style.fontSize = getComputedStyle(from).fontSize;
+    flyer.style.left = `${start.left}px`;
+    flyer.style.top = `${start.top}px`;
+    $("wrapped").append(flyer);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (run !== animRun) { flyer.remove(); return resolve(); }
+      const fly = flyer.getBoundingClientRect();
+      const dx = end.left + end.width / 2 - (fly.left + fly.width / 2);
+      const dy = end.top + end.height / 2 - (fly.top + fly.height / 2);
+      flyer.style.transform = `translate(${dx}px, ${dy}px)`;
+      flyer.style.fontSize = getComputedStyle(to).fontSize;
+    }));
+    setTimeout(() => { flyer.remove(); resolve(); }, 950);
+  });
+}
+
 async function animateMultiplier(b, run) {
+  const p = $("wr-p");
   const n = $("wr-n");
   const mult = $("wr-mult");
+  const result = document.querySelector(".wr-result");
+  const factP = $("wr-fact-p");
+  const factN = $("wr-fact-n");
   const chips = $("wr-chips");
-  n.textContent = "0";
+  p.textContent = "P";
+  n.textContent = "N";
+  [p, n].forEach((node) => node.classList.remove("landed"));
+  [factP, factN].forEach((node) => node.classList.remove("lit", "used"));
+  $("wr-fact-n-val").textContent = `${b.streak} ${b.streak === 1 ? "dzień" : "dni"}`;
   mult.textContent = "1";
+  result.classList.remove("in");
   chips.replaceChildren();
-  $("wr-mult-text").textContent = b.streak
-    ? `N = ${b.streak}, bo tyle dni z rzędu masz rozwiązane przed dzisiaj. Każdy dzień serii to +10% więcej punktów.`
-    : "N = 0, bo wczoraj seria się nie liczyła. Rozwiązuj codziennie, a mnożnik zacznie rosnąć!";
-  await wait(500, run);
+  $("wr-mult-text").textContent = "";
+
+  await wait(900, run);
+  factP.classList.add("lit");
+  await wait(700, run);
+  await fly($("wr-fact-p-val"), p, "10%", run);
+  p.textContent = "0,1";
+  p.classList.add("landed");
+  factP.classList.remove("lit");
+  factP.classList.add("used");
+
+  await wait(700, run);
+  factN.classList.add("lit");
+  await wait(700, run);
+  await fly($("wr-fact-n-val"), n, String(b.streak), run);
+  n.textContent = b.streak;
+  n.classList.add("landed");
+  factN.classList.remove("lit");
+  factN.classList.add("used");
+
+  await wait(600, run);
+  result.classList.add("in");
   const step = Math.max(120, Math.min(450, 2600 / Math.max(1, b.streak)));
   for (let k = 1; k <= b.streak; k++) {
     await wait(step, run);
-    n.textContent = k;
     mult.textContent = dec(Math.round(Math.pow(1.1, k) * 10000) / 10000);
     const chip = document.createElement("span");
     chip.textContent = "🔥";
     chips.append(chip);
     bump(mult);
   }
+  $("wr-mult-text").textContent = b.streak
+    ? "10% to 0,1. Każdy dzień serii mnoży punkty przez 1,1. Nie przerwij jej jutro!"
+    : "Dziś seria startuje od zera. Rozwiązuj codziennie, a mnożnik zacznie rosnąć!";
 }
 
 async function animateScore(b, run) {

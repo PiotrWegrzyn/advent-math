@@ -248,9 +248,24 @@ body.kid .stat.streak b { color: #b07d00; }
 .wr-rows li b { font-size: 1.05rem; } .wr-rows li .v { font-size: 1.4rem; font-weight: 900; text-align: right; font-variant-numeric: tabular-nums; }
 .wr-rows li small { grid-column: 1 / -1; opacity: .85; font-size: .85rem; }
 .wr-rows li.guarantee { background: rgba(242,183,5,.3); }
-.wr-formula { font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif; font-size: clamp(3.2rem, 16vw, 6rem); font-weight: 700;
+.wr-formula { font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif; font-size: clamp(2.8rem, 14vw, 5.5rem); font-weight: 700;
   line-height: 1.1; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.wr-formula sup { font-size: .5em; color: var(--gold); text-shadow: 0 0 18px rgba(255,220,90,.9); display: inline-block; min-width: .7em; }
+.wr-formula sup { font-size: .55em; color: var(--gold); text-shadow: 0 0 18px rgba(255,220,90,.9); display: inline-block; min-width: .7em; margin-left: .05em; }
+.wr-var { display: inline-block; color: #ffe27a; text-shadow: 0 0 14px rgba(255,226,122,.8); min-width: .9em; padding: 0 .12em; border-radius: .25em;
+  background: rgba(70,15,0,.45); box-shadow: inset 0 0 0 2px rgba(255,226,122,.55); text-align: center; line-height: 1.15; }
+sup.wr-var { margin-left: .08em; }
+.wr-var.landed { animation: landvar .5s; }
+@keyframes landvar { 40% { transform: scale(1.5); } }
+.wr-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 420px; margin-top: 22px; }
+.wr-fact { background: rgba(255,255,255,.16); border-radius: 16px; padding: 12px; transition: box-shadow .3s, background .3s, transform .3s; }
+.wr-fact small { display: block; font-size: .8rem; opacity: .9; line-height: 1.3; }
+.wr-fact b { display: block; font-size: 2rem; font-weight: 900; margin-top: 4px; font-variant-numeric: tabular-nums; }
+.wr-fact.lit { background: rgba(255,226,122,.35); box-shadow: 0 0 0 3px #ffe27a, 0 0 28px rgba(255,226,122,.8); transform: scale(1.05); }
+.wr-fact.used b { opacity: .45; }
+.flyer { position: fixed; z-index: 5; margin: 0; font-weight: 900; color: #ffe27a; text-shadow: 0 0 20px rgba(255,226,122,.95); pointer-events: none;
+  transition: transform .9s cubic-bezier(.5,-0.3,.3,1.2), font-size .9s; will-change: transform; }
+.wr-result { margin-top: 6px; opacity: 0; transform: translateY(12px); transition: opacity .4s, transform .4s; }
+.wr-result.in { opacity: 1; transform: none; }
 .wr-formula .wr-eq { margin: 0 .15em; opacity: .8; }
 .wr-formula .bump, .wr-big.bump { animation: bump .25s; }
 @keyframes bump { 50% { transform: scale(1.25); } }
