@@ -228,7 +228,7 @@ function goTo(index) {
     bar.className = i < slide ? "done" : i === slide ? "active" : "";
   });
   show("wr-hint", slide < SUMMARY);
-  [animatePoints, animateMultiplier, animateScore, () => {}][slide](task.breakdown, run).catch(() => {});
+  [animatePoints, animateMultiplier, animateScore, async () => {}][slide](task.breakdown, run).catch(() => {});
 }
 
 async function animatePoints(b, run) {
