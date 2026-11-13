@@ -46,7 +46,7 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
     def admin_redirect():
         return RedirectResponse("/admin.html")
 
-    @app.get("/healthz", include_in_schema=False)
+    @app.get("/health", include_in_schema=False)
     def health():
         return {"ok": True}
 

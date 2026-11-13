@@ -152,17 +152,6 @@
     </div>
     <div class="sheet-body">
       <div class="task-text" id="task-text"></div>
-      <div id="solved-box" class="hidden">
-        <p class="feedback good center">Brawo! Dobra odpowiedź 🎉</p>
-        <div class="formula">
-          <div class="formula-line">P = (100 − 10·<i>m</i> − 1·<i>b</i>) × 1,1<sup class="gold">N</sup></div>
-          <div class="formula-line" id="f-values"></div>
-          <div class="formula-line" id="f-result"></div>
-        </div>
-        <ul class="explain" id="f-explain"></ul>
-        <div class="big-points">+<span id="won"></span> pkt</div>
-        <p class="muted center" id="solved-note"></p>
-      </div>
     </div>
     <form id="answer-form" class="answer-bar">
       <p class="feedback" id="feedback"></p>
@@ -173,6 +162,57 @@
       </div>
     </form>
   </div>
+</div>
+
+
+<div id="wrapped" class="wrapped hidden" aria-live="polite">
+  <div class="wr-progress" id="wr-progress"><i></i><i></i><i></i><i></i></div>
+  <button class="wr-close" id="wr-close" aria-label="Zamknij">✕</button>
+
+  <section class="wr-slide s-points">
+    <p class="wr-kicker">Okienko <span class="wr-day"></span> · dobra odpowiedź! 🎉</p>
+    <p class="wr-label">Twoje punkty za zadanie</p>
+    <div class="wr-big" id="wr-base">0</div>
+    <ul class="wr-rows" id="wr-rows"></ul>
+  </section>
+
+  <section class="wr-slide s-mult">
+    <p class="wr-kicker">Mnożnik za serię</p>
+    <div class="wr-formula"><span>1,1</span><sup id="wr-n">0</sup><span class="wr-eq">=</span><span id="wr-mult">1</span></div>
+    <div class="wr-chips" id="wr-chips"></div>
+    <p class="wr-text" id="wr-mult-text"></p>
+  </section>
+
+  <section class="wr-slide s-score">
+    <p class="wr-kicker">Liczymy wynik</p>
+    <div class="wr-equation">
+      <span class="eq-part" id="wr-eq-points">0</span>
+      <span class="eq-part" id="wr-eq-times">× 1</span>
+      <span class="eq-part eq-eq" id="wr-eq-eq">=</span>
+      <span class="eq-part slot" id="wr-eq-result">0</span>
+    </div>
+    <p class="wr-text" id="wr-score-text"></p>
+  </section>
+
+  <section class="wr-slide s-summary">
+    <p class="wr-kicker">Okienko <span class="wr-day"></span> · podsumowanie</p>
+    <div class="wr-card">
+      <p class="wr-task" id="wr-task"></p>
+      <dl class="wr-stats">
+        <div><dt>⏱️ Czas</dt><dd id="wr-sum-time"></dd></div>
+        <div><dt>❌ Błędne odpowiedzi</dt><dd id="wr-sum-wrong"></dd></div>
+        <div><dt>⭐ Punkty</dt><dd id="wr-sum-base"></dd></div>
+        <div><dt>🔥 Mnożnik</dt><dd id="wr-sum-mult"></dd></div>
+      </dl>
+      <div class="wr-final"><span>Wynik</span><b id="wr-sum-score"></b></div>
+    </div>
+    <div class="wr-actions">
+      <button class="btn secondary" id="wr-replay">Obejrzyj jeszcze raz</button>
+      <button class="btn" id="wr-done">Wróć do kalendarza</button>
+    </div>
+  </section>
+
+  <p class="wr-hint" id="wr-hint">Dotknij albo przesuń →</p>
 </div>
 
 <script src="/kid.js"></script>

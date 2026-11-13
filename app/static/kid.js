@@ -139,15 +139,18 @@ async function openDay(day) {
     alert(e.message);
     return loadMe();
   }
+  if (task.solved) return openWrapped(SUMMARY);
   clockOffset = new Date(task.server_now).getTime() - Date.now();
   $("task-day").textContent = task.day;
   $("task-text").textContent = task.text;
   $("answer").value = "";
   $("feedback").textContent = "";
   $("feedback").className = "feedback";
-  renderTaskState();
+  clearInterval(timerHandle);
+  tick();
+  timerHandle = setInterval(tick, 1000);
   show("task-modal", true);
-  if (!task.solved) $("answer").focus();
+  $("answer").focus();
 }
 
 function elapsedSeconds() {
@@ -160,77 +163,216 @@ function tick() {
   $("potential").textContent = potentialPoints(elapsed, task.wrong_attempts, task.multiplier);
 }
 
-function renderTaskState() {
-  clearInterval(timerHandle);
-  show("answer-form", !task.solved);
-  show("timer-box", !task.solved);
-  show("solved-box", task.solved);
-  if (task.solved) {
-    $("won").textContent = task.points;
-    renderBreakdown(task.breakdown);
-    $("solved-note").textContent = "Wróć jutro po kolejne okienko!";
-  } else {
-    tick();
-    timerHandle = setInterval(tick, 1000);
-  }
-}
+const SLIDES = 4;
+const SUMMARY = SLIDES - 1;
+let slide = 0;
+let animRun = 0;
 
 function dec(n, digits = 4) {
   return n.toLocaleString("pl-PL", { maximumFractionDigits: digits });
 }
 
-function span(cls, text) {
-  const s = document.createElement("span");
-  s.className = cls;
-  s.textContent = text;
-  return s;
+function wait(ms, run) {
+  return new Promise((resolve, reject) => setTimeout(() => (run === animRun ? resolve() : reject("cancelled")), ms));
 }
 
-function line(id, parts, delay) {
-  const node = $(id);
-  node.replaceChildren(...parts.map((p) => (typeof p === "string" ? document.createTextNode(p) : p)));
-  node.classList.remove("reveal");
+function bump(node) {
+  node.classList.remove("bump");
   void node.offsetWidth;
-  node.style.animationDelay = `${delay}s`;
-  node.classList.add("reveal");
+  node.classList.add("bump");
 }
 
-function renderBreakdown(b) {
-  if (!b) return;
-  const supEl = document.createElement("sup");
-  supEl.className = "gold";
-  supEl.textContent = b.streak;
-  line("f-values", ["P = (100 − 10·", span("val", b.started_minutes_over), " − 1·", span("val", b.wrong_attempts), ") × 1,1", supEl], 0.3);
-  const base = b.minimum_applied ? `${b.raw} → 10` : String(b.base);
-  line("f-result", ["P = ", span("val", base), " × ", span("gold", dec(b.multiplier)), " ≈ ", span("total", b.points)], 0.9);
-
-  const items = [
-    ["⏱️ Czas: ", fmtTime(b.elapsed_seconds), b.started_minutes_over
-      ? ` → ${b.started_minutes_over} zaczęt${b.started_minutes_over === 1 ? "a minuta" : "e minuty"} ponad 5:00, czyli m = ${b.started_minutes_over} (−${b.time_penalty} pkt)`
-      : " → w 5 minutach, bez kary, m = 0"],
-    ["❌ Błędne próby: ", String(b.wrong_attempts), b.wrong_attempts ? `, czyli b = ${b.wrong_attempts} (−${b.wrong_penalty} pkt)` : ", czyli b = 0 🎯"],
-    ["🔥 Seria: ", null, ""],
-  ];
-  const list = $("f-explain");
-  list.replaceChildren();
-  items.forEach(([label, value, rest], i) => {
-    const li = document.createElement("li");
-    li.append(label);
-    if (i === 2) {
-      li.append(span("gold", `${b.streak} ${b.streak === 1 ? "dzień" : "dni"}`), ` z rzędu przed dzisiaj, czyli N = ${b.streak} → mnożnik ×${dec(b.multiplier)}`);
-    } else {
-      const strong = document.createElement("b");
-      strong.textContent = value;
-      li.append(strong, rest);
+function countUp(node, target, ms, run) {
+  return new Promise((resolve) => {
+    const start = performance.now();
+    function frame(now) {
+      if (run !== animRun) return resolve();
+      const t = Math.min(1, (now - start) / ms);
+      node.textContent = Math.round(target * (1 - Math.pow(1 - t, 3)));
+      if (t < 1) requestAnimationFrame(frame); else resolve();
     }
-    list.append(li);
+    requestAnimationFrame(frame);
   });
+}
+
+function openWrapped(startAt = 0) {
+  const b = task.breakdown;
+  if (!b) return;
+  document.querySelectorAll(".wr-day").forEach((n) => (n.textContent = task.day));
+  $("wr-task").textContent = task.text;
+  $("wr-sum-time").textContent = fmtTime(b.elapsed_seconds);
+  $("wr-sum-wrong").textContent = b.wrong_attempts;
+  $("wr-sum-base").textContent = b.base;
+  $("wr-sum-mult").textContent = "×" + dec(b.multiplier);
+  $("wr-sum-score").textContent = b.points;
+  show("task-modal", false);
+  show("wrapped", true);
+  goTo(startAt);
+}
+
+function closeWrapped() {
+  animRun++;
+  show("wrapped", false);
+  loadMe();
+}
+
+function goTo(index) {
+  slide = Math.max(0, Math.min(SUMMARY, index));
+  animRun++;
+  const run = animRun;
+  document.querySelectorAll(".wr-slide").forEach((node, i) => {
+    node.classList.toggle("active", i === slide);
+    node.classList.toggle("before", i < slide);
+  });
+  document.querySelectorAll("#wr-progress i").forEach((bar, i) => {
+    bar.className = i < slide ? "done" : i === slide ? "active" : "";
+  });
+  show("wr-hint", slide < SUMMARY);
+  [animatePoints, animateMultiplier, animateScore, () => {}][slide](task.breakdown, run).catch(() => {});
+}
+
+async function animatePoints(b, run) {
+  const big = $("wr-base");
+  big.textContent = "0";
+  const timeBonus = Math.max(0, 100 - b.time_penalty);
+  const rows = [
+    {
+      icon: "⏱️", title: "Bonus za czas", value: `+${timeBonus}`,
+      note: b.started_minutes_over
+        ? `Czas ${fmtTime(b.elapsed_seconds)}: 100 pkt minus 10 za każdą zaczętą minutę po 5:00 (${b.started_minutes_over} × −10)`
+        : `Czas ${fmtTime(b.elapsed_seconds)}: w 5 minutach, więc pełne 100 pkt!`,
+    },
+    {
+      icon: "❌", title: "Kara za błędne odpowiedzi", value: `−${b.wrong_penalty}`,
+      note: b.wrong_attempts ? `${b.wrong_attempts} × −1 pkt` : "Bez ani jednego błędu! 🎯",
+    },
+  ];
   if (b.minimum_applied) {
+    rows.push({ icon: "🛟", title: "Gwarantowane minimum", value: "10", note: "Za poprawną odpowiedź zawsze dostajesz co najmniej 10 pkt.", cls: "guarantee" });
+  }
+  const list = $("wr-rows");
+  list.replaceChildren(...rows.map((r) => {
     const li = document.createElement("li");
-    li.textContent = "🛟 Wyszło mniej niż 10, ale za dobrą odpowiedź zawsze dostajesz co najmniej 10 pkt!";
-    list.append(li);
+    if (r.cls) li.className = r.cls;
+    const title = document.createElement("b");
+    title.textContent = `${r.icon} ${r.title}`;
+    const value = document.createElement("span");
+    value.className = "v";
+    value.textContent = r.value;
+    const note = document.createElement("small");
+    note.textContent = r.note;
+    li.append(title, value, note);
+    return li;
+  }));
+  await wait(250, run);
+  const counting = countUp(big, b.base, 1100, run);
+  for (const li of list.children) {
+    await wait(450, run);
+    li.classList.add("in");
+  }
+  await counting;
+  bump(big);
+}
+
+async function animateMultiplier(b, run) {
+  const n = $("wr-n");
+  const mult = $("wr-mult");
+  const chips = $("wr-chips");
+  n.textContent = "0";
+  mult.textContent = "1";
+  chips.replaceChildren();
+  $("wr-mult-text").textContent = b.streak
+    ? `N = ${b.streak}, bo tyle dni z rzędu masz rozwiązane przed dzisiaj. Każdy dzień serii to +10% więcej punktów.`
+    : "N = 0, bo wczoraj seria się nie liczyła. Rozwiązuj codziennie, a mnożnik zacznie rosnąć!";
+  await wait(500, run);
+  const step = Math.max(120, Math.min(450, 2600 / Math.max(1, b.streak)));
+  for (let k = 1; k <= b.streak; k++) {
+    await wait(step, run);
+    n.textContent = k;
+    mult.textContent = dec(Math.round(Math.pow(1.1, k) * 10000) / 10000);
+    const chip = document.createElement("span");
+    chip.textContent = "🔥";
+    chips.append(chip);
+    bump(mult);
   }
 }
+
+async function animateScore(b, run) {
+  const points = $("wr-eq-points");
+  const times = $("wr-eq-times");
+  const eq = $("wr-eq-eq");
+  const result = $("wr-eq-result");
+  [points, times, eq, result].forEach((node) => node.classList.remove("in"));
+  result.classList.remove("landed", "spinning");
+  points.textContent = b.base;
+  times.textContent = "× " + dec(b.multiplier);
+  result.textContent = "0";
+  $("wr-score-text").textContent = "";
+  await wait(300, run);
+  points.classList.add("in");
+  await wait(2000, run);
+  times.classList.add("in");
+  await wait(900, run);
+  eq.classList.add("in");
+  result.classList.add("in", "spinning");
+  const duration = Math.min(7000, 1300 + 700 * (b.multiplier - 1));
+  const start = performance.now();
+  const top = Math.max(b.points * 1.6, 99);
+  let delay = 40;
+  while (performance.now() - start < duration) {
+    result.textContent = Math.floor(Math.random() * top);
+    const progress = (performance.now() - start) / duration;
+    delay = 40 + 220 * progress * progress;
+    await wait(delay, run);
+  }
+  result.classList.remove("spinning");
+  result.textContent = b.points;
+  result.classList.add("landed");
+  $("wr-score-text").textContent = `${b.base} pkt × ${dec(b.multiplier)} = ${b.points} pkt (po zaokrągleniu)`;
+  confetti(Math.min(120, 30 + b.streak * 10));
+}
+
+function confetti(count) {
+  const box = $("wrapped");
+  const colors = ["#ffe27a", "#ff6b6b", "#7be3a0", "#7fd0ff", "#ffffff"];
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement("i");
+    piece.className = "confetti";
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.background = colors[i % colors.length];
+    piece.style.animationDuration = `${1.8 + Math.random() * 1.8}s`;
+    piece.style.animationDelay = `${Math.random() * .6}s`;
+    box.append(piece);
+    setTimeout(() => piece.remove(), 4500);
+  }
+}
+
+(function wrappedControls() {
+  const box = $("wrapped");
+  let startX = null;
+  let startY = null;
+  box.addEventListener("pointerdown", (e) => { startX = e.clientX; startY = e.clientY; });
+  box.addEventListener("pointerup", (e) => {
+    if (startX === null || e.target.closest("button")) { startX = null; return; }
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    startX = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      goTo(slide + (dx < 0 ? 1 : -1));
+    } else if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+      goTo(slide + (e.clientX < window.innerWidth * 0.3 ? -1 : 1));
+    }
+  });
+  document.addEventListener("keydown", (e) => {
+    if ($("wrapped").classList.contains("hidden")) return;
+    if (e.key === "ArrowRight" || e.key === " ") goTo(slide + 1);
+    if (e.key === "ArrowLeft") goTo(slide - 1);
+    if (e.key === "Escape") closeWrapped();
+  });
+  $("wr-close").addEventListener("click", closeWrapped);
+  $("wr-done").addEventListener("click", closeWrapped);
+  $("wr-replay").addEventListener("click", () => goTo(0));
+})();
 
 $("answer").addEventListener("input", (e) => {
   let v = e.target.value.replace(/\./g, ",").replace(/[^\d,-]/g, "");
@@ -261,7 +403,8 @@ $("answer-form").addEventListener("submit", async (e) => {
       task.solved = true;
       task.points = result.points;
       task.breakdown = result.breakdown;
-      renderTaskState();
+      clearInterval(timerHandle);
+      openWrapped(0);
       loadMe();
     } else {
       task.wrong_attempts = result.wrong_attempts;
