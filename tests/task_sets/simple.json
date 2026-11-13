@@ -1,0 +1,8 @@
+{
+  "name": "Test set",
+  "days": {
+    "1": [{"text": "2 + 2", "answer": "4"}, {"text": "3 + 3", "answer": "6"}],
+    "2": [{"text": "1,5 + 1", "answer": "2,5"}],
+    "3": [{"text": "1 - 4", "answer": "-3"}]
+  }
+}

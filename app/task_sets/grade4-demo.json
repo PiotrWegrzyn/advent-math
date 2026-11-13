@@ -1,0 +1,341 @@
+{
+  "name": "Grade 4 (DEMO)",
+  "days": {
+    "1": [
+      {
+        "text": "Elfy zapakowały 210 prezentów, a potem jeszcze 100. Ile prezentów zapakowały?",
+        "answer": "310"
+      },
+      {
+        "text": "Elfy zapakowały 407 prezentów, a potem jeszcze 125. Ile prezentów zapakowały?",
+        "answer": "532"
+      },
+      {
+        "text": "Elfy zapakowały 202 prezentów, a potem jeszcze 88. Ile prezentów zapakowały?",
+        "answer": "290"
+      }
+    ],
+    "2": [
+      {
+        "text": "Na choince wisi 56 bombek w 7 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "8"
+      },
+      {
+        "text": "Na choince wisi 49 bombek w 7 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "7"
+      },
+      {
+        "text": "Na choince wisi 56 bombek w 7 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "8"
+      }
+    ],
+    "3": [
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 12 cm na 9 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "42"
+      },
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 14 cm na 6 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "40"
+      },
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 8 cm na 3 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "22"
+      }
+    ],
+    "4": [
+      {
+        "text": "Mikołaj ma 8 worków, w każdym po 30 prezentów. Ile prezentów ma razem?",
+        "answer": "240"
+      },
+      {
+        "text": "Mikołaj ma 4 worków, w każdym po 43 prezentów. Ile prezentów ma razem?",
+        "answer": "172"
+      },
+      {
+        "text": "Mikołaj ma 4 worków, w każdym po 53 prezentów. Ile prezentów ma razem?",
+        "answer": "212"
+      }
+    ],
+    "5": [
+      {
+        "text": "Elfy zapakowały 155 prezentów, a potem jeszcze 122. Ile prezentów zapakowały?",
+        "answer": "277"
+      },
+      {
+        "text": "Elfy zapakowały 310 prezentów, a potem jeszcze 86. Ile prezentów zapakowały?",
+        "answer": "396"
+      },
+      {
+        "text": "Elfy zapakowały 353 prezentów, a potem jeszcze 92. Ile prezentów zapakowały?",
+        "answer": "445"
+      }
+    ],
+    "6": [
+      {
+        "text": "Na choince wisi 30 bombek w 5 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "6"
+      },
+      {
+        "text": "Na choince wisi 54 bombek w 6 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "9"
+      },
+      {
+        "text": "Na choince wisi 63 bombek w 7 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "9"
+      }
+    ],
+    "7": [
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 6 cm na 8 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "28"
+      },
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 10 cm na 3 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "26"
+      },
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 13 cm na 7 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "40"
+      }
+    ],
+    "8": [
+      {
+        "text": "Mikołaj ma 6 worków, w każdym po 43 prezentów. Ile prezentów ma razem?",
+        "answer": "258"
+      },
+      {
+        "text": "Mikołaj ma 7 worków, w każdym po 34 prezentów. Ile prezentów ma razem?",
+        "answer": "238"
+      },
+      {
+        "text": "Mikołaj ma 9 worków, w każdym po 44 prezentów. Ile prezentów ma razem?",
+        "answer": "396"
+      }
+    ],
+    "9": [
+      {
+        "text": "Elfy zapakowały 162 prezentów, a potem jeszcze 107. Ile prezentów zapakowały?",
+        "answer": "269"
+      },
+      {
+        "text": "Elfy zapakowały 336 prezentów, a potem jeszcze 119. Ile prezentów zapakowały?",
+        "answer": "455"
+      },
+      {
+        "text": "Elfy zapakowały 366 prezentów, a potem jeszcze 71. Ile prezentów zapakowały?",
+        "answer": "437"
+      }
+    ],
+    "10": [
+      {
+        "text": "Na choince wisi 48 bombek w 6 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "8"
+      },
+      {
+        "text": "Na choince wisi 49 bombek w 7 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "7"
+      },
+      {
+        "text": "Na choince wisi 21 bombek w 3 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "7"
+      }
+    ],
+    "11": [
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 13 cm na 9 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "44"
+      },
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 14 cm na 6 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "40"
+      },
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 11 cm na 7 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "36"
+      }
+    ],
+    "12": [
+      {
+        "text": "Mikołaj ma 6 worków, w każdym po 51 prezentów. Ile prezentów ma razem?",
+        "answer": "306"
+      },
+      {
+        "text": "Mikołaj ma 8 worków, w każdym po 55 prezentów. Ile prezentów ma razem?",
+        "answer": "440"
+      },
+      {
+        "text": "Mikołaj ma 8 worków, w każdym po 58 prezentów. Ile prezentów ma razem?",
+        "answer": "464"
+      }
+    ],
+    "13": [
+      {
+        "text": "Elfy zapakowały 162 prezentów, a potem jeszcze 133. Ile prezentów zapakowały?",
+        "answer": "295"
+      },
+      {
+        "text": "Elfy zapakowały 264 prezentów, a potem jeszcze 76. Ile prezentów zapakowały?",
+        "answer": "340"
+      },
+      {
+        "text": "Elfy zapakowały 175 prezentów, a potem jeszcze 126. Ile prezentów zapakowały?",
+        "answer": "301"
+      }
+    ],
+    "14": [
+      {
+        "text": "Na choince wisi 32 bombek w 8 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "4"
+      },
+      {
+        "text": "Na choince wisi 64 bombek w 8 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "8"
+      },
+      {
+        "text": "Na choince wisi 42 bombek w 6 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "7"
+      }
+    ],
+    "15": [
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 7 cm na 6 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "26"
+      },
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 8 cm na 9 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "34"
+      },
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 6 cm na 8 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "28"
+      }
+    ],
+    "16": [
+      {
+        "text": "Mikołaj ma 9 worków, w każdym po 54 prezentów. Ile prezentów ma razem?",
+        "answer": "486"
+      },
+      {
+        "text": "Mikołaj ma 9 worków, w każdym po 55 prezentów. Ile prezentów ma razem?",
+        "answer": "495"
+      },
+      {
+        "text": "Mikołaj ma 9 worków, w każdym po 59 prezentów. Ile prezentów ma razem?",
+        "answer": "531"
+      }
+    ],
+    "17": [
+      {
+        "text": "Elfy zapakowały 278 prezentów, a potem jeszcze 131. Ile prezentów zapakowały?",
+        "answer": "409"
+      },
+      {
+        "text": "Elfy zapakowały 355 prezentów, a potem jeszcze 99. Ile prezentów zapakowały?",
+        "answer": "454"
+      },
+      {
+        "text": "Elfy zapakowały 430 prezentów, a potem jeszcze 124. Ile prezentów zapakowały?",
+        "answer": "554"
+      }
+    ],
+    "18": [
+      {
+        "text": "Na choince wisi 56 bombek w 8 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "7"
+      },
+      {
+        "text": "Na choince wisi 42 bombek w 6 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "7"
+      },
+      {
+        "text": "Na choince wisi 24 bombek w 4 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "6"
+      }
+    ],
+    "19": [
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 9 cm na 3 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "24"
+      },
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 5 cm na 4 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "18"
+      },
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 15 cm na 7 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "44"
+      }
+    ],
+    "20": [
+      {
+        "text": "Mikołaj ma 7 worków, w każdym po 58 prezentów. Ile prezentów ma razem?",
+        "answer": "406"
+      },
+      {
+        "text": "Mikołaj ma 7 worków, w każdym po 48 prezentów. Ile prezentów ma razem?",
+        "answer": "336"
+      },
+      {
+        "text": "Mikołaj ma 5 worków, w każdym po 41 prezentów. Ile prezentów ma razem?",
+        "answer": "205"
+      }
+    ],
+    "21": [
+      {
+        "text": "Elfy zapakowały 398 prezentów, a potem jeszcze 119. Ile prezentów zapakowały?",
+        "answer": "517"
+      },
+      {
+        "text": "Elfy zapakowały 411 prezentów, a potem jeszcze 123. Ile prezentów zapakowały?",
+        "answer": "534"
+      },
+      {
+        "text": "Elfy zapakowały 372 prezentów, a potem jeszcze 131. Ile prezentów zapakowały?",
+        "answer": "503"
+      }
+    ],
+    "22": [
+      {
+        "text": "Na choince wisi 32 bombek w 8 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "4"
+      },
+      {
+        "text": "Na choince wisi 30 bombek w 5 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "6"
+      },
+      {
+        "text": "Na choince wisi 24 bombek w 6 równych rzędach. Ile bombek jest w jednym rzędzie?",
+        "answer": "4"
+      }
+    ],
+    "23": [
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 12 cm na 8 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "40"
+      },
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 13 cm na 5 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "36"
+      },
+      {
+        "text": "Prostokątna kartka świąteczna ma wymiary 12 cm na 4 cm. Jaki jest jej obwód (w cm)?",
+        "answer": "32"
+      }
+    ],
+    "24": [
+      {
+        "text": "Mikołaj ma 7 worków, w każdym po 55 prezentów. Ile prezentów ma razem?",
+        "answer": "385"
+      },
+      {
+        "text": "Mikołaj ma 4 worków, w każdym po 42 prezentów. Ile prezentów ma razem?",
+        "answer": "168"
+      },
+      {
+        "text": "Mikołaj ma 7 worków, w każdym po 48 prezentów. Ile prezentów ma razem?",
+        "answer": "336"
+      }
+    ]
+  }
+}

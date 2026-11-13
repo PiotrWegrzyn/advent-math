@@ -1,0 +1,341 @@
+{
+  "name": "Grade 6 (DEMO)",
+  "days": {
+    "1": [
+      {
+        "text": "Rano termometr pokazywał -11°C, a w południe było o 6 stopni cieplej. Ile stopni było w południe?",
+        "answer": "-5"
+      },
+      {
+        "text": "Rano termometr pokazywał -6°C, a w południe było o 6 stopni cieplej. Ile stopni było w południe?",
+        "answer": "0"
+      },
+      {
+        "text": "Rano termometr pokazywał -5°C, a w południe było o 5 stopni cieplej. Ile stopni było w południe?",
+        "answer": "0"
+      }
+    ],
+    "2": [
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 4 cm, 3 cm i 5 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "60"
+      },
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 8 cm, 7 cm i 2 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "112"
+      },
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 8 cm, 4 cm i 3 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "96"
+      }
+    ],
+    "3": [
+      {
+        "text": "Pierniczków było 12. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "9"
+      },
+      {
+        "text": "Pierniczków było 28. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "21"
+      },
+      {
+        "text": "Pierniczków było 12. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "9"
+      }
+    ],
+    "4": [
+      {
+        "text": "Jedna bombka kosztuje 4,6 zł. Ile złotych kosztuje 5 takich bombek?",
+        "answer": "23,0"
+      },
+      {
+        "text": "Jedna bombka kosztuje 3,4 zł. Ile złotych kosztuje 4 takich bombek?",
+        "answer": "13,6"
+      },
+      {
+        "text": "Jedna bombka kosztuje 1,2 zł. Ile złotych kosztuje 5 takich bombek?",
+        "answer": "6,0"
+      }
+    ],
+    "5": [
+      {
+        "text": "Rano termometr pokazywał -2°C, a w południe było o 9 stopni cieplej. Ile stopni było w południe?",
+        "answer": "7"
+      },
+      {
+        "text": "Rano termometr pokazywał -3°C, a w południe było o 11 stopni cieplej. Ile stopni było w południe?",
+        "answer": "8"
+      },
+      {
+        "text": "Rano termometr pokazywał -5°C, a w południe było o 10 stopni cieplej. Ile stopni było w południe?",
+        "answer": "5"
+      }
+    ],
+    "6": [
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 9 cm, 4 cm i 6 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "216"
+      },
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 5 cm, 6 cm i 6 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "180"
+      },
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 5 cm, 7 cm i 6 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "210"
+      }
+    ],
+    "7": [
+      {
+        "text": "Pierniczków było 20. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "15"
+      },
+      {
+        "text": "Pierniczków było 12. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "9"
+      },
+      {
+        "text": "Pierniczków było 24. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "18"
+      }
+    ],
+    "8": [
+      {
+        "text": "Jedna bombka kosztuje 2,2 zł. Ile złotych kosztuje 4 takich bombek?",
+        "answer": "8,8"
+      },
+      {
+        "text": "Jedna bombka kosztuje 3,1 zł. Ile złotych kosztuje 7 takich bombek?",
+        "answer": "21,7"
+      },
+      {
+        "text": "Jedna bombka kosztuje 3,8 zł. Ile złotych kosztuje 6 takich bombek?",
+        "answer": "22,8"
+      }
+    ],
+    "9": [
+      {
+        "text": "Rano termometr pokazywał -10°C, a w południe było o 9 stopni cieplej. Ile stopni było w południe?",
+        "answer": "-1"
+      },
+      {
+        "text": "Rano termometr pokazywał -9°C, a w południe było o 8 stopni cieplej. Ile stopni było w południe?",
+        "answer": "-1"
+      },
+      {
+        "text": "Rano termometr pokazywał -12°C, a w południe było o 5 stopni cieplej. Ile stopni było w południe?",
+        "answer": "-7"
+      }
+    ],
+    "10": [
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 7 cm, 3 cm i 2 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "42"
+      },
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 6 cm, 8 cm i 4 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "192"
+      },
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 4 cm, 3 cm i 6 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "72"
+      }
+    ],
+    "11": [
+      {
+        "text": "Pierniczków było 24. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "18"
+      },
+      {
+        "text": "Pierniczków było 20. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "15"
+      },
+      {
+        "text": "Pierniczków było 20. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "15"
+      }
+    ],
+    "12": [
+      {
+        "text": "Jedna bombka kosztuje 4 zł. Ile złotych kosztuje 5 takich bombek?",
+        "answer": "20"
+      },
+      {
+        "text": "Jedna bombka kosztuje 1,9 zł. Ile złotych kosztuje 6 takich bombek?",
+        "answer": "11,4"
+      },
+      {
+        "text": "Jedna bombka kosztuje 4,1 zł. Ile złotych kosztuje 7 takich bombek?",
+        "answer": "28,7"
+      }
+    ],
+    "13": [
+      {
+        "text": "Rano termometr pokazywał -3°C, a w południe było o 11 stopni cieplej. Ile stopni było w południe?",
+        "answer": "8"
+      },
+      {
+        "text": "Rano termometr pokazywał -10°C, a w południe było o 6 stopni cieplej. Ile stopni było w południe?",
+        "answer": "-4"
+      },
+      {
+        "text": "Rano termometr pokazywał -3°C, a w południe było o 9 stopni cieplej. Ile stopni było w południe?",
+        "answer": "6"
+      }
+    ],
+    "14": [
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 5 cm, 6 cm i 6 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "180"
+      },
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 6 cm, 6 cm i 6 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "216"
+      },
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 5 cm, 8 cm i 2 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "80"
+      }
+    ],
+    "15": [
+      {
+        "text": "Pierniczków było 28. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "21"
+      },
+      {
+        "text": "Pierniczków było 24. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "18"
+      },
+      {
+        "text": "Pierniczków było 12. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "9"
+      }
+    ],
+    "16": [
+      {
+        "text": "Jedna bombka kosztuje 2,4 zł. Ile złotych kosztuje 4 takich bombek?",
+        "answer": "9,6"
+      },
+      {
+        "text": "Jedna bombka kosztuje 1,4 zł. Ile złotych kosztuje 7 takich bombek?",
+        "answer": "9,8"
+      },
+      {
+        "text": "Jedna bombka kosztuje 1,5 zł. Ile złotych kosztuje 6 takich bombek?",
+        "answer": "9,0"
+      }
+    ],
+    "17": [
+      {
+        "text": "Rano termometr pokazywał -2°C, a w południe było o 6 stopni cieplej. Ile stopni było w południe?",
+        "answer": "4"
+      },
+      {
+        "text": "Rano termometr pokazywał -5°C, a w południe było o 10 stopni cieplej. Ile stopni było w południe?",
+        "answer": "5"
+      },
+      {
+        "text": "Rano termometr pokazywał -2°C, a w południe było o 5 stopni cieplej. Ile stopni było w południe?",
+        "answer": "3"
+      }
+    ],
+    "18": [
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 5 cm, 8 cm i 6 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "240"
+      },
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 5 cm, 7 cm i 3 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "105"
+      },
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 5 cm, 8 cm i 3 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "120"
+      }
+    ],
+    "19": [
+      {
+        "text": "Pierniczków było 24. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "18"
+      },
+      {
+        "text": "Pierniczków było 20. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "15"
+      },
+      {
+        "text": "Pierniczków było 24. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "18"
+      }
+    ],
+    "20": [
+      {
+        "text": "Jedna bombka kosztuje 4,6 zł. Ile złotych kosztuje 6 takich bombek?",
+        "answer": "27,6"
+      },
+      {
+        "text": "Jedna bombka kosztuje 1,7 zł. Ile złotych kosztuje 6 takich bombek?",
+        "answer": "10,2"
+      },
+      {
+        "text": "Jedna bombka kosztuje 3,1 zł. Ile złotych kosztuje 4 takich bombek?",
+        "answer": "12,4"
+      }
+    ],
+    "21": [
+      {
+        "text": "Rano termometr pokazywał -7°C, a w południe było o 6 stopni cieplej. Ile stopni było w południe?",
+        "answer": "-1"
+      },
+      {
+        "text": "Rano termometr pokazywał -8°C, a w południe było o 8 stopni cieplej. Ile stopni było w południe?",
+        "answer": "0"
+      },
+      {
+        "text": "Rano termometr pokazywał -5°C, a w południe było o 11 stopni cieplej. Ile stopni było w południe?",
+        "answer": "6"
+      }
+    ],
+    "22": [
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 7 cm, 5 cm i 5 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "175"
+      },
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 5 cm, 5 cm i 6 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "150"
+      },
+      {
+        "text": "Pudełko na prezent ma kształt prostopadłościanu o wymiarach 7 cm, 6 cm i 2 cm. Jaka jest jego objętość (w cm³)?",
+        "answer": "84"
+      }
+    ],
+    "23": [
+      {
+        "text": "Pierniczków było 28. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "21"
+      },
+      {
+        "text": "Pierniczków było 28. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "21"
+      },
+      {
+        "text": "Pierniczków było 20. Dzieci zjadły 3/4 z nich. Ile pierniczków zjadły?",
+        "answer": "15"
+      }
+    ],
+    "24": [
+      {
+        "text": "Jedna bombka kosztuje 1,8 zł. Ile złotych kosztuje 4 takich bombek?",
+        "answer": "7,2"
+      },
+      {
+        "text": "Jedna bombka kosztuje 2,6 zł. Ile złotych kosztuje 3 takich bombek?",
+        "answer": "7,8"
+      },
+      {
+        "text": "Jedna bombka kosztuje 1,7 zł. Ile złotych kosztuje 6 takich bombek?",
+        "answer": "10,2"
+      }
+    ]
+  }
+}

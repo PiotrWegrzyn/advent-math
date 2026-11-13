@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <title>Karteczki z kodami</title>
+  <style>
+    body { font-family: "Nunito", system-ui, sans-serif; margin: 0; padding: 10mm; color: #1d2733; background: #fff; }
+    .bar { margin-bottom: 8mm; } .bar button { font: inherit; padding: 8px 16px; }
+    .sheet { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+    .card { border: 1.5px dashed #999; border-radius: 4mm; padding: 5mm; display: flex; gap: 5mm; align-items: center; break-inside: avoid; }
+    .card svg { width: 32mm; height: 32mm; flex: none; }
+    .card h2 { margin: 0 0 2mm; font-size: 14pt; }
+    .code { font-size: 22pt; font-weight: 800; letter-spacing: .15em; margin: 2mm 0; }
+    .small { font-size: 8.5pt; color: #555; word-break: break-all; }
+    @media print { .bar { display: none; } body { padding: 0; } @page { margin: 10mm; } }
+  </style>
+</head>
+<body>
+<div class="bar"><button onclick="print()">Drukuj</button> <span id="info"></span></div>
+<div class="sheet" id="sheet"></div>
+<script>
+(async function () {
+  let token = null;
+  try { token = localStorage.getItem("advent-admin-token"); } catch {}
+  const id = new URLSearchParams(location.search).get("class");
+  const res = await fetch(`/api/admin/classes/${id}/cards`, { headers: { Authorization: `Bearer ${token || ""}` } });
+  if (!res.ok) { document.getElementById("info").textContent = "Zaloguj się najpierw w panelu nauczyciela."; return; }
+  const data = await res.json();
+  document.title = `Karteczki – klasa ${data.class_name}`;
+  document.getElementById("info").textContent = `Klasa ${data.class_name}: ${data.cards.length} karteczek`;
+  const sheet = document.getElementById("sheet");
+  for (const c of data.cards) {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = c.qr_svg;
+    const text = document.createElement("div");
+    const h = document.createElement("h2"); h.textContent = "🎄 Kalendarz adwentowy";
+    const nick = document.createElement("div"); nick.textContent = `Klasa ${data.class_name}, nr ${c.number} · ${c.nick}`;
+    const code = document.createElement("div"); code.className = "code"; code.textContent = c.code;
+    const site = document.createElement("div"); site.className = "small"; site.textContent = `Zeskanuj kod albo wejdź na ${data.site} i wpisz kod.`;
+    text.append(h, nick, code, site);
+    card.append(text);
+    sheet.append(card);
+  }
+})();
+</script>
+</body>
+</html>

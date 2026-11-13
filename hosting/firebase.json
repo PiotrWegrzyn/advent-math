@@ -1,0 +1,9 @@
+{
+  "hosting": {
+    "site": "advent-math",
+    "public": "public",
+    "rewrites": [
+      { "source": "**", "run": { "serviceId": "advent-math", "region": "europe-central2" } }
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Matematyczny kalendarz adwentowy</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="snow"></div>
+<div class="wrap">
+  <h1 class="title">🎄 Matematyczny kalendarz adwentowy<small>Codziennie jedno zadanie. Nie przerwij serii!</small></h1>
+
+  <section id="login" class="panel hidden">
+    <h2>Wpisz swój kod</h2>
+    <p class="muted">Kod jest na karteczce od pani. Możesz też zeskanować kod QR.</p>
+    <form id="login-form">
+      <input id="code" class="code-input" inputmode="numeric" autocomplete="off" maxlength="6" placeholder="••••••">
+      <p class="error" id="login-error"></p>
+      <button class="btn" style="width:100%">Wchodzę!</button>
+    </form>
+  </section>
+
+  <section id="main" class="hidden">
+    <div class="panel">
+      <div class="row">
+        <div class="grow"><h2 id="nick"></h2><span class="muted" id="class-name"></span></div>
+        <button class="btn secondary small" id="logout">To nie ja</button>
+      </div>
+      <div class="stats" style="margin-top:12px">
+        <div class="stat"><b id="total">0</b><span>punktów</span></div>
+        <div class="stat"><b id="streak">0</b><span>🔥 dni z rzędu</span></div>
+        <div class="stat"><b id="mult">×1,00</b><span>mnożnik na dziś</span></div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="calendar">Kalendarz</button>
+      <button class="tab" data-tab="rankings">Ranking</button>
+    </div>
+
+    <div id="tab-calendar">
+      <p id="phase-note" class="panel hidden"></p>
+      <div class="grid" id="grid"></div>
+      <p class="muted" style="color:#cfe0ee;margin-top:14px;font-size:.9rem">
+        Za zadanie dostajesz 100 pkt, jeśli rozwiążesz je w 5 minut. Każda zaczęta minuta ponad 5 to −10 pkt, każda zła odpowiedź −1 pkt
+        (zawsze dostaniesz co najmniej 10 pkt). Każdy dzień serii zwiększa punkty o 10%, ale opuszczony dzień zeruje serię!
+      </p>
+    </div>
+
+    <div id="tab-rankings" class="panel hidden">
+      <div class="subtabs" id="ranking-tabs">
+        <button class="subtab active" data-r="my_class">Moja klasa</button>
+        <button class="subtab" data-r="school">Wszyscy</button>
+        <button class="subtab" data-r="classes">Klasy</button>
+        <button class="subtab" data-r="today">Dziś najszybciej</button>
+      </div>
+      <div id="ranking-body"></div>
+    </div>
+  </section>
+</div>
+
+<div id="intro-modal" class="modal-bg hidden">
+  <div class="panel modal">
+    <h2>Okienko <span id="intro-day"></span></h2>
+    <p>Gdy otworzysz okienko, zacznie się liczyć czas. Przez <b>5 minut</b> możesz zdobyć pełne punkty.</p>
+    <p class="muted">Przygotuj kartkę i ołówek 📝</p>
+    <div class="row"><button class="btn secondary grow" data-close>Jeszcze nie</button><button class="btn grow" id="intro-go">Otwieram!</button></div>
+  </div>
+</div>
+
+<div id="task-modal" class="modal-bg hidden">
+  <div class="panel modal">
+    <div class="row"><h2 class="grow">Okienko <span id="task-day"></span></h2><button class="btn secondary small" data-close>Zamknij</button></div>
+    <div class="timer" id="timer-box"><span>⏱️ <span id="timer">0:00</span></span><span>Do zdobycia: <span id="potential">100</span> pkt</span></div>
+    <div class="task-text" id="task-text"></div>
+    <form id="answer-form">
+      <input id="answer" class="answer-input" inputmode="decimal" autocomplete="off" placeholder="Twój wynik">
+      <p class="feedback" id="feedback"></p>
+      <button class="btn green" style="width:100%">Sprawdź</button>
+    </form>
+    <div id="solved-box" class="hidden">
+      <p class="feedback good" style="text-align:center">Brawo! Dobra odpowiedź 🎉</p>
+      <div class="formula">
+        <div class="formula-line">P = (100 − 10·<i>m</i> − 1·<i>b</i>) × 1,1<sup class="gold">N</sup></div>
+        <div class="formula-line" id="f-values"></div>
+        <div class="formula-line" id="f-result"></div>
+      </div>
+      <ul class="explain" id="f-explain"></ul>
+      <div class="big-points">+<span id="won"></span> pkt</div>
+      <p class="muted" style="text-align:center" id="solved-note"></p>
+    </div>
+  </div>
+</div>
+
+<script src="/kid.js"></script>
+</body>
+</html>

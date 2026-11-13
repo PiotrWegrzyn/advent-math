@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel nauczyciela</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .wrap { max-width: 1200px; }
+    .dash { overflow-x: auto; }
+    .dash table { font-size: .85rem; }
+    .dash th, .dash td { text-align: center; padding: 6px 4px; white-space: nowrap; }
+    .dash td.left, .dash th.left { text-align: left; }
+    .dash tr.inactive td { opacity: .45; }
+    .cell-solved { background: #d8f0e0; } .cell-opened { background: #fde7c4; }
+    .today-col { outline: 2px solid var(--gold); }
+    .classes { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    code { font-size: 1rem; letter-spacing: .1em; }
+    .tasks-day { border-top: 1px solid var(--line); padding: 8px 0; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1 class="title">🎄 Panel nauczyciela</h1>
+
+  <section id="login" class="panel hidden" style="max-width:420px;margin:0 auto">
+    <h2>Logowanie</h2>
+    <form id="login-form">
+      <input type="password" id="password" placeholder="Hasło" autocomplete="current-password">
+      <p class="error" id="login-error"></p>
+      <button class="btn" style="width:100%">Zaloguj</button>
+    </form>
+  </section>
+
+  <section id="main" class="hidden">
+    <div class="tabs">
+      <button class="tab active" data-tab="dashboard">Klasy</button>
+      <button class="tab" data-tab="rankings">Rankingi</button>
+      <button class="tab" data-tab="tasks">Zadania</button>
+    </div>
+
+    <div id="tab-dashboard">
+      <div class="panel">
+        <div class="row"><h2 class="grow">Klasy</h2><span class="muted" id="phase"></span><button class="btn secondary small" id="logout">Wyloguj</button></div>
+        <div class="classes" id="class-list"></div>
+        <details>
+          <summary><b>Dodaj klasę</b></summary>
+          <form id="create-form" class="row" style="margin-top:10px">
+            <input id="new-name" placeholder="Nazwa, np. 4a" style="max-width:160px" required>
+            <select id="new-set" style="max-width:240px"></select>
+            <input id="new-size" type="number" min="1" max="60" placeholder="Liczba uczniów" style="max-width:170px" required>
+            <button class="btn">Dodaj</button>
+          </form>
+        </details>
+        <p class="error" id="admin-error"></p>
+      </div>
+
+      <div class="panel hidden" id="class-panel">
+        <div class="row">
+          <h2 class="grow" id="class-title"></h2>
+          <label class="row">Zestaw: <select id="class-set" style="width:auto"></select></label>
+          <button class="btn secondary small" id="grow-class">Dodaj uczniów</button>
+          <button class="btn small" id="print-cards">Drukuj karteczki</button>
+        </div>
+        <p class="muted" id="class-summary"></p>
+        <div class="dash" id="dash"></div>
+        <p class="muted" style="font-size:.85rem">✅ poprawnie (punkty) · 🟧 otwarte, jeszcze nie rozwiązane · — nie otwarte. Najedź na komórkę, żeby zobaczyć szczegóły.</p>
+      </div>
+    </div>
+
+    <div id="tab-rankings" class="panel hidden">
+      <div class="subtabs">
+        <button class="subtab active" data-r="school">Wszyscy</button>
+        <button class="subtab" data-r="classes">Klasy</button>
+        <button class="subtab" data-r="today">Dziś najszybciej</button>
+      </div>
+      <div id="ranking-body"></div>
+    </div>
+
+    <div id="tab-tasks" class="panel hidden">
+      <div class="row"><h2 class="grow">Zestawy zadań</h2><select id="preview-set" style="width:auto"></select></div>
+      <div id="tasks-body"></div>
+    </div>
+  </section>
+</div>
+<script src="/admin.js"></script>
+</body>
+</html>
